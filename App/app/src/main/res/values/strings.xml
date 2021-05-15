@@ -1,3 +1,23 @@
-<resources>
+ <resources>
     <string name="app_name">CapstoneMobile</string>
-</resources>
+    <string name="top_recommended">Top Recommended</string>
+    <string name="price">Price</string>
+    <string name="sell_at">Sell At</string>
+    <string name="what_to_plan_photo">what_to_plan_photo</string>
+    <string name="add_plant">Add Plant</string>
+    <string name="nama">Nama</string>
+    <string name="phase">Phase</string>
+    <string name="picture">Picture</string>
+    <string name="add_photo">Add photo</string>
+    <string name="health">Health</string>
+    <string name="overall">Overall</string>
+    <string name="humidity">Humidity</string>
+    <string name="temperature">Temperature</string>
+    <string name="nitrogen">Nitrogen</string>
+    <string name="phosphorus">Phosphorus</string>
+    <string name="potassium">Potassium</string>
+    <string name="change">Change</string>
+    <string name="daily_checkup">Daily Checkup</string>
+    <string name="disease">Disease</string>
+     <string name="humidity">Humidity</string>
+ </resources>

@@ -12,4 +12,5 @@
     <color name="grey">#DADADA</color>
     <color name="grey_warm">#F2F2F2</color>
     <color name="grey_darker">#BDBDBD</color>
+    <color name="red">#F85757</color>
 </resources>

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.capstonemobile">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".PlantApplication"
@@ -19,6 +19,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.mygarden.AddPlantActivity"
+            android:theme="@style/Theme.CapstoneMobile.NoActionBar" />
+        <activity
+            android:name=".ui.mygarden.PlantDetailActivity"
+            android:theme="@style/Theme.CapstoneMobile.NoActionBar" />
+        <activity
+            android:name=".ui.mygarden.DailyCheckupActivity"
+            android:theme="@style/Theme.CapstoneMobile.NoActionBar" />
+        <activity
+            android:name=".ui.mygarden.AddDailyCheckupActivity"
+            android:theme="@style/Theme.CapstoneMobile.NoActionBar" />
+        <activity
+            android:name=".ui.mygarden.DetailDailyCheckupActivity"
+            android:theme="@style/Theme.CapstoneMobile.NoActionBar" />
+        <activity
+            android:name=".ui.mygarden.DiseaseHistoryActivity"
+            android:theme="@style/Theme.CapstoneMobile.NoActionBar" />
+        <activity android:name=".ui.mygarden.DetailDiseaseHistoryActivity"
+            android:theme="@style/Theme.CapstoneMobile.NoActionBar"/>
     </application>
 
 </manifest>

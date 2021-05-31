@@ -21,7 +21,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:textSize="24sp"
             android:textColor="@color/white"
-            android:text="My Garden"
+            android:text="@string/my_garden"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -38,26 +38,43 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_my_garden"
         android:layout_margin="10dp"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linear" />
+        app:layout_constraintTop_toBottomOf="@+id/linear"
+        tools:listitem="@layout/item_my_garden"/>
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/round_green"
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_add_my_garden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/add"
+        android:tint="@color/white"
+        android:backgroundTint="@color/green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95" />
+        app:layout_constraintVertical_bias="0.95"
+        android:contentDescription="fab" />
 
-
+<!--    <androidx.appcompat.widget.AppCompatImageButton-->
+<!--        android:id="@+id/btn_add_my_garden"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:background="@drawable/round_green"-->
+<!--        android:src="@drawable/add"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.95"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.95" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

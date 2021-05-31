@@ -5,64 +5,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white_darker"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingBottom="20dp">
+
         <ImageView
+            android:id="@+id/btn_back"
             android:layout_marginVertical="20dp"
-            android:id="@+id/imageView3"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/back"
+            android:layout_marginStart="16dp"
+            app:tint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.08"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            />
+            android:contentDescription="back" />
 
         <TextView
             android:id="@+id/name_plant"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
+            android:layout_marginStart="8dp"
             android:fontFamily="@font/poppins_bold"
             android:textColor="@color/black"
             android:textSize="24sp"
+            android:text="@string/plant_name"
             tools:text="Kunyit"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintStart_toEndOf="@+id/btn_back"
             app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
             android:id="@+id/image_frame"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="28dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginHorizontal="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/name_plant" >
+
             <com.makeramen.roundedimageview.RoundedImageView
-                android:scaleType="fitXY"
-                app:riv_corner_radius="10dp"
+                android:scaleType="centerCrop"
+                app:riv_corner_radius="4dp"
+                android:src="@drawable/plant"
+                android:adjustViewBounds="true"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
+
             <ImageView
                 android:layout_gravity="bottom|right"
                 android:src="@drawable/fullscreen"
                 android:layout_width="40dp"
                 android:layout_height="40dp"/>
+
         </FrameLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/round_grey_warm"
-            android:paddingVertical="30dp"
-            android:paddingHorizontal="20dp"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="16dp"
+            app:layout_constraintCircleRadius="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -470,7 +482,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/cv_health" />
 
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_phase"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -494,7 +506,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"/>
                 </FrameLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:id="@+id/textView14"
@@ -509,31 +521,34 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cv_phase" />
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_daily_checkup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView14">
+
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:padding="20dp">
+
                     <TextView
                         android:id="@+id/text_daily_checkup"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="Checkup your plant to update the health"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"/>
+                        android:text="Checkup your plant to update the health" />
+
                     <ImageView
-                        android:src="@drawable/checkup"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right"/>
+                        android:layout_gravity="right"
+                        android:src="@drawable/checkup" />
                 </FrameLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
 
             <TextView
@@ -549,7 +564,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cv_daily_checkup" />
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_disease"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -571,9 +586,9 @@
                         android:src="@drawable/disease"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right"/>
+                        android:layout_gravity="end"/>
                 </FrameLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,17 +1,17 @@
 package com.example.capstonemobile.ui.mygarden
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.capstonemobile.databinding.ActivityDetailDailyCheckupBinding
+import android.os.Bundle
+import com.example.capstonemobile.R
+import com.example.capstonemobile.databinding.ActivityDetailDiseaseHistoryBinding
 
-class DetailDailyCheckupActivity: AppCompatActivity() {
+class DetailDiseaseHistoryActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityDetailDailyCheckupBinding
+    private lateinit var binding: ActivityDetailDiseaseHistoryBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailDailyCheckupBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_detail_disease_history)
 
         back()
     }

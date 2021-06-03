@@ -3,6 +3,7 @@ package com.example.capstonemobile.data.source.remote
 import androidx.lifecycle.LiveData
 import com.example.capstonemobile.data.source.local.entity.Plant
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
+import com.example.capstonemobile.data.source.local.entity.User
 import okhttp3.RequestBody
 
 interface RemoteSource {
@@ -13,5 +14,5 @@ interface RemoteSource {
 
     fun insertNewPlant(id: String,body: RequestBody): LiveData<ApiResponse<PlantDetail>>
 
-
+    fun login(body: RequestBody): LiveData<ApiResponse<User>>
 }

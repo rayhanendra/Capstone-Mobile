@@ -7,6 +7,7 @@ import androidx.paging.PagedList
 import com.example.capstonemobile.data.source.local.LocalSource
 import com.example.capstonemobile.data.source.local.entity.Plant
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
+import com.example.capstonemobile.data.source.local.entity.User
 import com.example.capstonemobile.data.source.remote.ApiResponse
 import com.example.capstonemobile.data.source.remote.RemoteSource
 import com.example.capstonemobile.data.source.remote.StatusResponse
@@ -112,6 +113,27 @@ class PlantRepository @Inject constructor(
                    }
                 }
 
+                StatusResponse.ERROR -> {
+                    result.addSource(result){
+                        result.value = it
+                    }
+                }
+            }
+        }
+        return result
+    }
+
+    override fun login(body: RequestBody): LiveData<Resource<User>> {
+
+        val result = MediatorLiveData<Resource<User>>()
+        val apiResponse = remoteSource.login(body)
+        result.addSource(apiResponse){ response ->
+            when(response.status){
+                StatusResponse.SUCCESS -> {
+                    result.addSource(result){
+                        result.value = it
+                    }
+                }
                 StatusResponse.ERROR -> {
                     result.addSource(result){
                         result.value = it

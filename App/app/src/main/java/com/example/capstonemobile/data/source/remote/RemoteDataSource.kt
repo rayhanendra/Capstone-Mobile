@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.capstonemobile.api.ApiService
 import com.example.capstonemobile.data.source.local.entity.Plant
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
+import com.example.capstonemobile.data.source.local.entity.User
 import com.ojanbelajar.moviekatalogue.utils.EspressoIdlingResource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -74,6 +75,27 @@ class RemoteDataSource @Inject constructor(
                                 e.message.toString(),
                                 PlantDetail()
                         )
+                )
+            }
+        }
+        EspressoIdlingResource.decrement()
+        return result
+    }
+
+    override fun login(body: RequestBody): LiveData<ApiResponse<User>> {
+        EspressoIdlingResource.increment()
+        val result = MutableLiveData<ApiResponse<User>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val respoonse = apiService.login(body).await()
+                result.postValue(ApiResponse.success(respoonse.user))
+            } catch (e: IOException){
+                e.printStackTrace()
+                result.postValue(
+                    ApiResponse.error(
+                        e.message.toString(),
+                        User()
+                    )
                 )
             }
         }

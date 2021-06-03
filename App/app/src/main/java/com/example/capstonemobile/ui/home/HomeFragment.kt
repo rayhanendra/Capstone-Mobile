@@ -15,9 +15,10 @@ import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.example.capstonemobile.data.source.local.entity.PlantSlider
 import com.example.capstonemobile.databinding.FragmentHomeBinding
+import com.example.capstonemobile.utils.SessionManagement
 
 class HomeFragment: Fragment() {
-
+    private lateinit var session: SessionManagement
     private lateinit var binding: FragmentHomeBinding
     private val plants: List<PlantSlider> = emptyList()
 
@@ -26,6 +27,7 @@ class HomeFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        session = SessionManagement(requireActivity().applicationContext)
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
 
         return binding.root

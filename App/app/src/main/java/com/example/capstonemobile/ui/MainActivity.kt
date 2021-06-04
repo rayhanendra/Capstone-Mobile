@@ -2,14 +2,12 @@ package com.example.capstonemobile.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Html
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.capstonemobile.R
 import com.example.capstonemobile.databinding.ActivityMainBinding
 import com.example.capstonemobile.ui.disease.DiseaseCheckFragment
 import com.example.capstonemobile.ui.home.HomeFragment
-import com.example.capstonemobile.ui.mygarden.MyGardenFragment
+import com.example.capstonemobile.ui.mygarden.MyGarden.MyGardenFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*

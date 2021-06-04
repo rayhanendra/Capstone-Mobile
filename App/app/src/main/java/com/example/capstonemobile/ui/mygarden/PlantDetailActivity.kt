@@ -9,6 +9,10 @@ class PlantDetailActivity: AppCompatActivity(){
 
     private lateinit var binding: ActivityPlantDetailBinding
 
+    companion object {
+        const val EXTRA_PLANT = "extra_plant"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlantDetailBinding.inflate(layoutInflater)

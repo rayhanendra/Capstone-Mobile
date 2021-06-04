@@ -8,6 +8,7 @@ import com.example.capstonemobile.data.source.local.LocalSource
 import com.example.capstonemobile.data.source.local.entity.Plant
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
 import com.example.capstonemobile.data.source.local.entity.User
+import com.example.capstonemobile.data.source.local.entity.UserPlantEntity
 import com.example.capstonemobile.data.source.remote.ApiResponse
 import com.example.capstonemobile.data.source.remote.RemoteSource
 import com.example.capstonemobile.data.source.remote.StatusResponse
@@ -64,6 +65,12 @@ class PlantRepository @Inject constructor(
         }.asLiveData()
     }
 
+    //ini buat list mygarden
+    override fun getAllUserPlant(): LiveData<Resource<PagedList<UserPlantEntity>>> {
+        TODO("Not yet implemented")
+    }
+
+    //seharusnya ini satu object karena buat detail di responsenya juga satu object
     override fun getPlantByUserId(id: String): LiveData<Resource<PagedList<PlantDetail>>> {
         return object : NetworkBoundResource<PagedList<PlantDetail>, List<PlantDetail>>() {
             override fun loadFromDB(): LiveData<PagedList<PlantDetail>> {

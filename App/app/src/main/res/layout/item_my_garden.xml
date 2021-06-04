@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         >
         <ImageView
+            android:id="@+id/iv_plant_img"
             android:contentDescription="@string/what_to_plan_photo"
-            android:id="@+id/imageView"
             android:layout_width="130dp"
             android:layout_height="120dp"
             android:background="@color/green"
@@ -26,7 +26,7 @@
             app:tint="@color/green" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_user_plant"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -53,11 +53,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_plant"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/price"
+            android:id="@+id/tv_plant_phase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -71,7 +71,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/seed_image"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_plant"
             app:layout_constraintVertical_bias="0.0"
             tools:text="Test"/>
 
@@ -90,7 +90,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/sell_at"
+            android:id="@+id/tv_created_at"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"

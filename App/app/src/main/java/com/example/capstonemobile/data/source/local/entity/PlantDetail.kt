@@ -5,7 +5,6 @@ import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 
@@ -39,5 +38,8 @@ data class PlantDetail(
         var plantPhase: String = "",
 
         @ColumnInfo(name = "plantSuggestion")
-        var plantSuggestion: String = ""
+        var plantSuggestion: String = "",
+
+        @ColumnInfo(name = "createdAt")
+        var createdAt: Double = 0.0
 ): Parcelable

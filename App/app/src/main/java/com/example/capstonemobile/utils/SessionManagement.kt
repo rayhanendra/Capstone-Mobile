@@ -24,6 +24,8 @@ class SessionManagement(context: Context) {
         editor = pref.edit()
     }
 
+    val phase: String
+        get() = pref.getString("phase","").toString()
 
     val user: HashMap<String,String>
         get() {
@@ -41,8 +43,14 @@ class SessionManagement(context: Context) {
     val isFirstOpen: Boolean
         get() = pref.getBoolean(IS_FIRST, false)
 
-    fun createLogin(email: String, password: String){
+    fun setPhase(name: String){
+        editor.putString("phase",name)
+        editor.commit()
+    }
+
+    fun createLogin(id: String,email: String, password: String){
         editor.putBoolean(IS_LOGIN,true)
+        editor.putString(key_id,id)
         editor.putString(key_email,email)
         editor.putString(key_password,password)
         editor.commit()

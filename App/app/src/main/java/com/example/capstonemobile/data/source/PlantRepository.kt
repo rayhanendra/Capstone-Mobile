@@ -7,16 +7,13 @@ import androidx.paging.PagedList
 import com.example.capstonemobile.data.source.local.LocalSource
 import com.example.capstonemobile.data.source.local.entity.Plant
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
+import com.example.capstonemobile.data.source.local.entity.UploadImage
 import com.example.capstonemobile.data.source.local.entity.User
-import com.example.capstonemobile.data.source.local.entity.UserPlantEntity
 import com.example.capstonemobile.data.source.remote.ApiResponse
 import com.example.capstonemobile.data.source.remote.RemoteSource
 import com.example.capstonemobile.data.source.remote.StatusResponse
 import com.ojanbelajar.moviekatalogue.utils.Resource
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
 
@@ -25,18 +22,13 @@ class PlantRepository @Inject constructor(
         private val localSource: LocalSource
 ): Repository{
 
-    override fun getPlant(): LiveData<Resource<PagedList<Plant>>> {
-        return object : NetworkBoundResource<PagedList<Plant>,List<Plant>>() {
-            override fun loadFromDB(): LiveData<PagedList<Plant>> {
-                val config = PagedList.Config.Builder().apply {
-                    setEnablePlaceholders(false)
-                    setInitialLoadSizeHint(4)
-                    setPageSize(4)
-                }.build()
-                return LivePagedListBuilder(localSource.getPlant(),config).build()
+    override fun getPlant(): LiveData<Resource<List<Plant>>> {
+        return object : NetworkBoundResource<List<Plant>,List<Plant>>() {
+            override fun loadFromDB(): LiveData<List<Plant>> {
+                return localSource.getPlant()
             }
 
-            override fun shouldFetch(data: PagedList<Plant>?): Boolean =
+            override fun shouldFetch(data: List<Plant>?): Boolean =
                     data == null || data.isEmpty()
 
             override fun createCall(): LiveData<ApiResponse<List<Plant>>> =
@@ -65,9 +57,27 @@ class PlantRepository @Inject constructor(
         }.asLiveData()
     }
 
-    //ini buat list mygarden
-    override fun getAllUserPlant(): LiveData<Resource<PagedList<UserPlantEntity>>> {
-        TODO("Not yet implemented")
+
+
+    override fun getPlantById(id: String): LiveData<Resource<Plant>> {
+        val result = MediatorLiveData<Resource<Plant>>()
+        val apiResponse = remoteSource.getPlantById(id)
+        result.addSource(apiResponse) { response ->
+            when (response.status) {
+                StatusResponse.SUCCESS -> {
+                    result.addSource(result){
+                        result.value = it
+                    }
+                }
+
+                StatusResponse.ERROR -> {
+                    result.addSource(result){
+                        result.value = it
+                    }
+                }
+            }
+        }
+        return result
     }
 
     //seharusnya ini satu object karena buat detail di responsenya juga satu object
@@ -100,24 +110,46 @@ class PlantRepository @Inject constructor(
                             response.plantImage,
                             response.plantDetail,
                             response.plantPhase,
-                            response.plantSuggestion
+                            response.plantSuggestion,
+                            response.createdAt
                     )
                     list.add(result)
                 }
-                localSource.insertPlantById(list)
+                localSource.insertPlantDetail(list)
             }
         }.asLiveData()
     }
 
-    override fun insertNewPlant(id: String, body: RequestBody): LiveData<Resource<PlantDetail>> {
+    override fun insertNewPlant(id: String, plant: PlantDetail): LiveData<Resource<PlantDetail>> {
         val result = MediatorLiveData<Resource<PlantDetail>>()
-        val apiResponse = remoteSource.insertNewPlant(id, body)
+        val apiResponse = remoteSource.insertNewPlant(id, plant)
         result.addSource(apiResponse) { response ->
             when (response.status) {
                 StatusResponse.SUCCESS -> {
                    result.addSource(result){
                        result.value = it
                    }
+                }
+
+                StatusResponse.ERROR -> {
+                    result.addSource(result){
+                        result.value = it
+                    }
+                }
+            }
+        }
+        return result
+    }
+
+    override fun uploadImage(picture: MultipartBody.Part): LiveData<Resource<UploadImage>> {
+        val result = MediatorLiveData<Resource<UploadImage>>()
+        val apiResponse = remoteSource.uploadImage(picture)
+        result.addSource(apiResponse) { response ->
+            when (response.status) {
+                StatusResponse.SUCCESS -> {
+                    result.addSource(result){
+                        result.value = it
+                    }
                 }
 
                 StatusResponse.ERROR -> {

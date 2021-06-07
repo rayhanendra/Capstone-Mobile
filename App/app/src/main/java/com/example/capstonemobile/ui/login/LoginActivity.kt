@@ -1,6 +1,5 @@
 package com.example.capstonemobile.ui.login
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -40,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
                 if (user != null){
                     when(user.status){
                         Status.SUCCESS -> {
-                            session.createLogin(user.data?.email.toString(),user.data?.password.toString())
+                            session.createLogin(user.data?.id.toString(),user.data?.email.toString(),user.data?.password.toString())
                             startActivity<MainActivity>()
                         }
                         Status.ERROR -> {
@@ -48,7 +47,6 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
                 }
-
             })
 
         }

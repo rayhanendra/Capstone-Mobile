@@ -26,7 +26,7 @@ import javax.inject.Singleton
 object AppModule {
 
     @Provides
-    fun provideBase() = "https://api.themoviedb.org/3/"
+    fun provideBase() = "https://yubisayu.et.r.appspot.com/"
 
     @Singleton
     @Provides

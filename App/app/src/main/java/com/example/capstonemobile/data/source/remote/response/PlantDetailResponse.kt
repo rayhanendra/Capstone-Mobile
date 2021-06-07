@@ -1,7 +1,7 @@
 package com.example.capstonemobile.data.source.remote.response
 
 import android.os.Parcelable
-import com.example.capstonemobile.data.source.local.entity.PlantDetail
+import com.example.capstonemobile.data.source.local.entity.Plant
 import kotlinx.android.parcel.Parcelize
 
 
@@ -9,5 +9,5 @@ import kotlinx.android.parcel.Parcelize
 data class PlantDetailResponse (
         var code : String = "",
         var status: String = "",
-        var data: List<PlantDetail> = emptyList()
+        var data: Plant = Plant()
 ): Parcelable

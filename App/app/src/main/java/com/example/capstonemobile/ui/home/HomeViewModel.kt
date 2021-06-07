@@ -9,6 +9,8 @@ class HomeViewModel @ViewModelInject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-    fun getPlant() = repository.getPlant()
+    fun getAllPlant() = repository.getPlant()
+
+    fun getPlantByUserId(id: String) = repository.getPlantByUserId(id)
 
 }

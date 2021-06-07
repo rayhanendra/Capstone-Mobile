@@ -1,5 +1,6 @@
 package com.example.capstonemobile.data.source.local.room
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
@@ -12,14 +13,17 @@ import com.example.capstonemobile.data.source.local.entity.PlantDetail
 interface PlantDao {
 
     @Query("Select * from plants")
-    fun getPlant(): DataSource.Factory<Int,Plant>
-
+    fun getPlant(): LiveData<List<Plant>>
 
     @Query("Select * from plant_detail")
-    fun getPlantById(): DataSource.Factory<Int,PlantDetail>
+    fun getPlantById(): DataSource.Factory<Int, PlantDetail>
+
+    @Query("SELECT * FROM plants WHERE id= :id")
+    fun getPlantDetailById(id: String): LiveData<Plant>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE,entity = Plant::class)
     fun insertPlant(plants: List<Plant>)
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE,entity = PlantDetail::class)
     fun insertPlantDetail(plants: List<PlantDetail>)

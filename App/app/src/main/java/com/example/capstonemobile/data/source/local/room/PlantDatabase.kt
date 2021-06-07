@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.capstonemobile.data.source.local.entity.*
 
-@Database(entities = [Checkup::class,Disease::class,DiseaseDetail::class, Plant::class, PlantDetail::class,User::class],version = 1,exportSchema = false)
+@Database(entities = [Checkup::class,Disease::class,DiseaseDetail::class, Plant::class, PlantDetail::class,User::class],version = 3,exportSchema = false)
 abstract class PlantDatabase: RoomDatabase(){
     abstract fun plantDao(): PlantDao
 

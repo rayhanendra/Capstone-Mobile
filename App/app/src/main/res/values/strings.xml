@@ -29,4 +29,5 @@
     <string name="logo">logo</string>
     <string name="accent">accent</string>
     <string name="tanamify">Tanamify</string>
+    <string name="saved_photo">Saved Photo</string>
 </resources>

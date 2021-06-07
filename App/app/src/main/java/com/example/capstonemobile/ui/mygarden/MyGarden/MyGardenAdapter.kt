@@ -13,19 +13,20 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.capstonemobile.R
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
 import com.example.capstonemobile.databinding.ItemMyGardenBinding
+import com.example.capstonemobile.ui.home.PlantAdapter
 import com.example.capstonemobile.ui.mygarden.PlantDetailActivity
+import java.util.ArrayList
 
-class MyGardenAdapter (private val context: Context): PagedListAdapter<PlantDetail, MyGardenAdapter.MyGardenViewHolder>(DIFF_CALLBACK) {
-    companion object{
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<PlantDetail>(){
-            override fun areItemsTheSame(oldItem: PlantDetail, newItem: PlantDetail): Boolean {
-                return oldItem.plantId == newItem.plantId
-            }
+class MyGardenAdapter (private val context: Context): RecyclerView.Adapter<MyGardenAdapter.MyGardenViewHolder>() {
 
-            override fun areContentsTheSame(oldItem: PlantDetail, newItem: PlantDetail): Boolean {
-                return oldItem == newItem
-            }
-        }
+    private var listData = ArrayList<PlantDetail>()
+    var onItemClick: ((PlantDetail) -> Unit)? = null
+
+    fun setData(newListData: List<PlantDetail>?) {
+        if (newListData == null) return
+        listData.clear()
+        listData.addAll(newListData)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(
@@ -37,11 +38,13 @@ class MyGardenAdapter (private val context: Context): PagedListAdapter<PlantDeta
     }
 
     override fun onBindViewHolder(holder: MyGardenViewHolder, position: Int) {
-
+        val data = listData[position]
+        holder.bind(data)
     }
 
+    override fun getItemCount(): Int = listData.size
 
-    class MyGardenViewHolder(private val binding: ItemMyGardenBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class MyGardenViewHolder(private val binding: ItemMyGardenBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(plant: PlantDetail) {
             with(binding) {
                 tvUserPlant.text = plant.userPlantName
@@ -62,6 +65,13 @@ class MyGardenAdapter (private val context: Context): PagedListAdapter<PlantDeta
                 }
             }
         }
+        init {
+            binding.root.setOnClickListener {
+                onItemClick?.invoke(listData[adapterPosition])
+            }
+        }
     }
+
+
 
 }

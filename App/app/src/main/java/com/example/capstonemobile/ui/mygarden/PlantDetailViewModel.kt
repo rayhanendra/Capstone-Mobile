@@ -2,11 +2,12 @@ package com.example.capstonemobile.ui.mygarden
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.example.capstonemobile.data.source.Repository
 
 class PlantDetailViewModel @ViewModelInject constructor(
     private val repository: Repository
 ): ViewModel() {
 
-    fun getPlantDetail(id: String) = repository.getPlantById(id)
+    fun getPlantDetail(id: String) = repository.getPlantById(id).asLiveData()
 }

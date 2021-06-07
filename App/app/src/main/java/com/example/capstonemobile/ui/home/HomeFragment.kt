@@ -20,9 +20,12 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
 import com.example.capstonemobile.data.source.local.entity.PlantSlider
 import com.example.capstonemobile.databinding.FragmentHomeBinding
+import com.example.capstonemobile.ui.mygarden.PlantDetailActivity
 import com.example.capstonemobile.utils.SessionManagement
+import com.ojanbelajar.moviekatalogue.utils.Resource
 import com.ojanbelajar.moviekatalogue.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 
 @AndroidEntryPoint
@@ -47,37 +50,44 @@ class HomeFragment: Fragment() {
         adapter = PlantAdapter(requireActivity())
         getAllPlant()
         getPlantByUserId(session.user["id"].toString())
+        adapter.onItemClick = { data ->
+            startActivity<PlantDetailActivity>("plant" to data)
+        }
     }
 
     private fun getAllPlant(){
-        model.getAllPlant().observe(viewLifecycleOwner, Observer {  plant ->
+        model.plants.observe(viewLifecycleOwner, Observer {  plant ->
             if (plant != null){
-                when(plant.status){
-                    Status.SUCCESS -> {
+                when(plant){
+                    is Resource.Success -> {
                         toast("Got Data")
                     }
-                    Status.ERROR -> {
-                        toast("Something Wrong")
+                    is Resource.Loading -> {
+                        toast("Loading")
                     }
-
+                    is Resource.Error -> {
+                        toast("Error")
+                    }
                 }
             }
-
         })
     }
 
     private fun getPlantByUserId(id: String){
         model.getPlantByUserId(id).observe(viewLifecycleOwner, Observer { plant ->
             if (plant != null){
-                when(plant.status){
-                    Status.SUCCESS -> {
+                when(plant){
+                    is Resource.Success -> {
                         Log.d("ojan",plant.data.toString())
                         if (plant.data != null){
-                            adapter.submitList(plant.data)
+                            adapter.setData(plant.data)
                             setupSlider()
                         }
                     }
-                    Status.ERROR -> {
+                    is Resource.Loading -> {
+                        toast("Loading")
+                    }
+                    is Resource.Error -> {
                         toast("Something Wrong")
                     }
 

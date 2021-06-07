@@ -18,9 +18,11 @@ import com.example.capstonemobile.data.source.local.entity.Phase
 import com.example.capstonemobile.data.source.local.entity.Plant
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
 import com.example.capstonemobile.databinding.ActivityAddPlantBinding
+import com.example.capstonemobile.ui.MainActivity
 import com.example.capstonemobile.ui.mygarden.PlantDetailActivity
 import com.example.capstonemobile.ui.mygarden.addPlant.PhaseData.listData
 import com.example.capstonemobile.utils.SessionManagement
+import com.ojanbelajar.moviekatalogue.utils.Resource
 import com.ojanbelajar.moviekatalogue.utils.Status
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -78,8 +80,8 @@ class AddPlantActivity: AppCompatActivity(){
     private fun getAllPlant() {
         model.getAllPlant().observe(this, Observer {plant ->
             if (plant != null){
-                when(plant.status){
-                    Status.SUCCESS -> {
+                when(plant){
+                    is Resource.Success -> {
                         if (plant.data != null){
                             for(p in plant.data){
                                 plants.add(p)
@@ -87,8 +89,11 @@ class AddPlantActivity: AppCompatActivity(){
                             spinnerSetup()
                         }
                     }
-                    Status.ERROR -> {
-                        toast("Something Wrong")
+                    is Resource.Loading -> {
+                        toast("Loading")
+                    }
+                    is Resource.Error -> {
+                        toast("Error")
                     }
                 }
             }
@@ -101,13 +106,17 @@ class AddPlantActivity: AppCompatActivity(){
             val body = MultipartBody.Part.createFormData("picture", picture.name, reqFile)
             model.uploadImage(body).observe(this, Observer { image ->
                 if (image != null){
-                    when(image.status){
-                        Status.SUCCESS -> {
+                    when(image){
+                        is Resource.Success -> {
                             if (image.data != null) imageString = image.data.imageUrl
                         }
-                        Status.ERROR -> {
-                            toast("Something Wrong")
+                        is Resource.Loading -> {
+                            toast("Loading")
                         }
+                        is Resource.Error -> {
+                            toast("Error")
+                        }
+
                     }
                 }
             })
@@ -221,12 +230,15 @@ class AddPlantActivity: AppCompatActivity(){
                )
                model.insertPlant(session.user["id"].toString(),result).observe(this, Observer {result ->
                    if (result != null){
-                       when(result.status){
-                           Status.SUCCESS -> {
-                                startActivity<PlantDetailActivity>("plant" to result.data)
+                       when(result){
+                           is Resource.Success -> {
+                               startActivity<PlantDetailActivity>("plant" to result.data)
                            }
-                           Status.ERROR -> {
-                               toast("Something Wrong")
+                           is Resource.Loading -> {
+                               toast("Loading")
+                           }
+                           is Resource.Error -> {
+                               toast("Error")
                            }
                        }
                    }

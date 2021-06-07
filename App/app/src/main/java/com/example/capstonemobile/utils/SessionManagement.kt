@@ -48,11 +48,9 @@ class SessionManagement(context: Context) {
         editor.commit()
     }
 
-    fun createLogin(id: String,email: String, password: String){
+    fun createLogin(id: String){
         editor.putBoolean(IS_LOGIN,true)
         editor.putString(key_id,id)
-        editor.putString(key_email,email)
-        editor.putString(key_password,password)
         editor.commit()
     }
 

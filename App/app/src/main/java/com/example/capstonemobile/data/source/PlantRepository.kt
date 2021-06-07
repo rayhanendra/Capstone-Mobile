@@ -1,9 +1,6 @@
 package com.example.capstonemobile.data.source
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
+
 import com.example.capstonemobile.data.source.local.LocalSource
 import com.example.capstonemobile.data.source.local.entity.Plant
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
@@ -11,175 +8,110 @@ import com.example.capstonemobile.data.source.local.entity.UploadImage
 import com.example.capstonemobile.data.source.local.entity.User
 import com.example.capstonemobile.data.source.remote.ApiResponse
 import com.example.capstonemobile.data.source.remote.RemoteSource
-import com.example.capstonemobile.data.source.remote.StatusResponse
+import com.example.capstonemobile.data.source.remote.response.DataResponse
+import com.example.capstonemobile.utils.AppExecutors
 import com.ojanbelajar.moviekatalogue.utils.Resource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
 
 class PlantRepository @Inject constructor(
         private val remoteSource: RemoteSource,
-        private val localSource: LocalSource
+        private val localSource: LocalSource,
+        private val appExecutors: AppExecutors
 ): Repository{
-
-    override fun getPlant(): LiveData<Resource<List<Plant>>> {
-        return object : NetworkBoundResource<List<Plant>,List<Plant>>() {
-            override fun loadFromDB(): LiveData<List<Plant>> {
+    override fun getPlant(): Flow<Resource<List<Plant>>> {
+        return object : NetworkBoundResource<List<Plant>,List<Plant>>(){
+            override fun loadFromDB(): Flow<List<Plant>> {
                 return localSource.getPlant()
             }
 
-            override fun shouldFetch(data: List<Plant>?): Boolean =
-                    data == null || data.isEmpty()
+            override fun shouldFetch(data: List<Plant>?): Boolean = data == null || data.isEmpty()
 
-            override fun createCall(): LiveData<ApiResponse<List<Plant>>> =
-                    remoteSource.getAllPlant()
+            override suspend fun createCall(): Flow<ApiResponse<List<Plant>>> =
+                remoteSource.getAllPlant()
 
-            override fun saveCallResult(data: List<Plant>) {
-                val list = ArrayList<Plant>()
-                for( response in data){
-                    val result = Plant(
-                            response.id,
-                            response.plantName,
-                            response.plantClass,
-                            response.plantSpecies,
-                            response.plantHumidity,
-                            response.plantLighting,
-                            response.plantFertilizer,
-                            response.plantPrice,
-                            response.plantSalesPrice,
-                            response.plantMonthHarvest,
-                            response.plantPreparation
-                    )
-                    list.add(result)
+            override suspend fun saveCallResult(data: List<Plant>) {
+                appExecutors.diskIO().execute{
+                    localSource.insertPlant(data)
                 }
-            localSource.insertPlant(list)
             }
-        }.asLiveData()
+
+        }.asFlow()
     }
 
-
-
-    override fun getPlantById(id: String): LiveData<Resource<Plant>> {
-        val result = MediatorLiveData<Resource<Plant>>()
-        val apiResponse = remoteSource.getPlantById(id)
-        result.addSource(apiResponse) { response ->
-            when (response.status) {
-                StatusResponse.SUCCESS -> {
-                    result.addSource(result){
-                        result.value = it
-                    }
-                }
-
-                StatusResponse.ERROR -> {
-                    result.addSource(result){
-                        result.value = it
-                    }
-                }
+    override fun getPlantById(id: String): Flow<Resource<Plant>> {
+        return object : NetworkOnlyResource<Plant,Plant>(){
+            override fun loadFromNetwork(data: Plant): Flow<Plant> {
+                return flowOf(data)
             }
-        }
-        return result
+
+            override suspend fun createCall(): Flow<ApiResponse<Plant>> {
+                return remoteSource.getPlantById(id)
+            }
+
+        }.asFlow()
     }
 
-    //seharusnya ini satu object karena buat detail di responsenya juga satu object
-    override fun getPlantByUserId(id: String): LiveData<Resource<PagedList<PlantDetail>>> {
-        return object : NetworkBoundResource<PagedList<PlantDetail>, List<PlantDetail>>() {
-            override fun loadFromDB(): LiveData<PagedList<PlantDetail>> {
-                val config = PagedList.Config.Builder().apply {
-                    setEnablePlaceholders(false)
-                    setInitialLoadSizeHint(4)
-                    setPageSize(4)
-                }.build()
-                return LivePagedListBuilder(localSource.getPlantById(),config).build()
+    override fun getPlantByUserId(id: String): Flow<Resource<List<PlantDetail>>> {
+        return object : NetworkBoundResource<List<PlantDetail>,List<PlantDetail>>(){
+            override fun loadFromDB(): Flow<List<PlantDetail>> {
+                return localSource.getPlantById()
             }
 
-            override fun shouldFetch(data: PagedList<PlantDetail>?): Boolean =
-                    data == null || data.isEmpty()
+            override fun shouldFetch(data: List<PlantDetail>?): Boolean  = data == null || data.isEmpty()
 
-            override fun createCall(): LiveData<ApiResponse<List<PlantDetail>>> =
-                    remoteSource.getPlantByUserId(id)
 
-            override fun saveCallResult(data: List<PlantDetail>) {
-                val list = ArrayList<PlantDetail>()
-                for (response in data) {
-                    val result = PlantDetail(
-                            response.id,
-                            response.plantId,
-                            response.userId,
-                            response.userPlantName,
-                            response.plantHealth,
-                            response.plantImage,
-                            response.plantDetail,
-                            response.plantPhase,
-                            response.plantSuggestion,
-                            response.createdAt
-                    )
-                    list.add(result)
+            override suspend fun createCall(): Flow<ApiResponse<List<PlantDetail>>> {
+                return remoteSource.getPlantByUserId(id)
+            }
+
+            override suspend fun saveCallResult(data: List<PlantDetail>) {
+                appExecutors.diskIO().execute{
+                    localSource.insertPlantDetail(data)
                 }
-                localSource.insertPlantDetail(list)
             }
-        }.asLiveData()
+
+        }.asFlow()
     }
 
-    override fun insertNewPlant(id: String, plant: PlantDetail): LiveData<Resource<PlantDetail>> {
-        val result = MediatorLiveData<Resource<PlantDetail>>()
-        val apiResponse = remoteSource.insertNewPlant(id, plant)
-        result.addSource(apiResponse) { response ->
-            when (response.status) {
-                StatusResponse.SUCCESS -> {
-                   result.addSource(result){
-                       result.value = it
-                   }
-                }
-
-                StatusResponse.ERROR -> {
-                    result.addSource(result){
-                        result.value = it
-                    }
-                }
+    override fun insertNewPlant(id: String, plant: PlantDetail): Flow<Resource<PlantDetail>> {
+        return object : NetworkOnlyResource<PlantDetail,PlantDetail>(){
+            override fun loadFromNetwork(data: PlantDetail): Flow<PlantDetail> {
+                return flowOf(data)
             }
-        }
-        return result
+
+            override suspend fun createCall(): Flow<ApiResponse<PlantDetail>> {
+                return remoteSource.insertNewPlant(id,plant)
+            }
+        }.asFlow()
     }
 
-    override fun uploadImage(picture: MultipartBody.Part): LiveData<Resource<UploadImage>> {
-        val result = MediatorLiveData<Resource<UploadImage>>()
-        val apiResponse = remoteSource.uploadImage(picture)
-        result.addSource(apiResponse) { response ->
-            when (response.status) {
-                StatusResponse.SUCCESS -> {
-                    result.addSource(result){
-                        result.value = it
-                    }
-                }
-
-                StatusResponse.ERROR -> {
-                    result.addSource(result){
-                        result.value = it
-                    }
-                }
+    override fun uploadImage(picture: MultipartBody.Part): Flow<Resource<UploadImage>> {
+        return object : NetworkOnlyResource<UploadImage,UploadImage>(){
+            override fun loadFromNetwork(data: UploadImage): Flow<UploadImage> {
+                return flowOf(data)
             }
-        }
-        return result
+
+            override suspend fun createCall(): Flow<ApiResponse<UploadImage>> {
+                return remoteSource.uploadImage(picture)
+            }
+        }.asFlow()
     }
 
-    override fun login(body: RequestBody): LiveData<Resource<User>> {
-
-        val result = MediatorLiveData<Resource<User>>()
-        val apiResponse = remoteSource.login(body)
-        result.addSource(apiResponse){ response ->
-            when(response.status){
-                StatusResponse.SUCCESS -> {
-                    result.addSource(result){
-                        result.value = it
-                    }
-                }
-                StatusResponse.ERROR -> {
-                    result.addSource(result){
-                        result.value = it
-                    }
-                }
+    override fun login(body: RequestBody): Flow<Resource<User>> {
+        return object : NetworkOnlyResource<User,DataResponse>(){
+            override fun loadFromNetwork(data: DataResponse): Flow<User> {
+                return flowOf(data.user)
             }
-        }
-        return result
+
+            override suspend fun createCall(): Flow<ApiResponse<DataResponse>> {
+                return remoteSource.login(body)
+            }
+
+        }.asFlow()
     }
+
 }

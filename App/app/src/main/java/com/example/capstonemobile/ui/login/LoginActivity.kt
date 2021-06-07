@@ -2,17 +2,22 @@ package com.example.capstonemobile.ui.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.capstonemobile.databinding.ActivityLoginBinding
 import com.example.capstonemobile.ui.MainActivity
 import com.example.capstonemobile.utils.SessionManagement
+import com.ojanbelajar.moviekatalogue.utils.Resource
 import com.ojanbelajar.moviekatalogue.utils.Status
+import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.RequestBody
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import org.json.JSONObject
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private lateinit var session: SessionManagement
     private lateinit var binding: ActivityLoginBinding
@@ -37,13 +42,16 @@ class LoginActivity : AppCompatActivity() {
             )
             model.login(body).observe(this, Observer { user ->
                 if (user != null){
-                    when(user.status){
-                        Status.SUCCESS -> {
-                            session.createLogin(user.data?.id.toString(),user.data?.email.toString(),user.data?.password.toString())
+                    when(user){
+                        is Resource.Success -> {
+                            session.createLogin(user.data?.id!!)
                             startActivity<MainActivity>()
                         }
-                        Status.ERROR -> {
-                            toast("Something Wrong")
+                        is Resource.Loading -> {
+                            toast("Loading")
+                        }
+                        is Resource.Error -> {
+                            toast("Error")
                         }
                     }
                 }

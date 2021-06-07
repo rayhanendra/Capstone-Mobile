@@ -1,5 +1,6 @@
 package com.example.capstonemobile.data.source.remote
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.capstonemobile.api.ApiService
@@ -7,9 +8,11 @@ import com.example.capstonemobile.data.source.local.entity.Plant
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
 import com.example.capstonemobile.data.source.local.entity.UploadImage
 import com.example.capstonemobile.data.source.local.entity.User
+import com.example.capstonemobile.data.source.remote.response.DataResponse
 import com.ojanbelajar.moviekatalogue.utils.EspressoIdlingResource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -21,131 +24,104 @@ class RemoteDataSource @Inject constructor(
         private val apiService: ApiService
 ): RemoteSource{
 
-    override fun getAllPlant(): LiveData<ApiResponse<List<Plant>>> {
-        EspressoIdlingResource.increment()
-        val result = MutableLiveData<ApiResponse<List<Plant>>>()
-        CoroutineScope(Dispatchers.IO).launch {
+
+    override suspend fun getAllPlant(): Flow<ApiResponse<List<Plant>>> {
+        return flow {
             try {
-                val response = apiService.getPlant().await()
-                result.postValue(ApiResponse.success(response.data))
-            } catch (e : IOException){
-                e.printStackTrace()
-                result.postValue(
-                        ApiResponse.error(
-                                e.message.toString(),
-                                mutableListOf()
-                        )
-                )
+                val response = apiService.getPlant()
+                val data = response.data
+                if (data.isNotEmpty()){
+                    emit(ApiResponse.Success(response.data))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception){
+                emit(ApiResponse.Error(e.toString()))
             }
-        }
-        EspressoIdlingResource.decrement()
-        return result
+        }.flowOn(Dispatchers.IO )
     }
 
-    override fun getPlantByUserId(id: String): LiveData<ApiResponse<List<PlantDetail>>> {
-        EspressoIdlingResource.increment()
-        val result = MutableLiveData<ApiResponse<List<PlantDetail>>>()
-        CoroutineScope(Dispatchers.IO).launch {
+    override suspend fun getPlantByUserId(id: String): Flow<ApiResponse<List<PlantDetail>>> {
+        return flow {
             try {
-                val response = apiService.getPlantByUserId(id).await()
-                result.postValue(ApiResponse.success(response.data))
-            }catch (e: IOException){
-                e.printStackTrace()
-                result.postValue(
-                        ApiResponse.error(
-                                e.message.toString(),
-                                mutableListOf()
-                        )
-                )
+                val response = apiService.getPlantByUserId(id)
+                val data = response.data
+                if (data.isNotEmpty()){
+                    emit(ApiResponse.Success(response.data))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception){
+                emit(ApiResponse.Error(e.toString()))
             }
-        }
-        EspressoIdlingResource.decrement()
-        return result
+        }.flowOn(Dispatchers.IO)
     }
 
-    override fun getPlantById(id: String): LiveData<ApiResponse<Plant>> {
-        EspressoIdlingResource.increment()
-        val result = MutableLiveData<ApiResponse<Plant>>()
-        CoroutineScope(Dispatchers.IO).launch {
+    override suspend fun getPlantById(id: String): Flow<ApiResponse<Plant>> {
+        return flow {
             try {
-                val response = apiService.getPlantById(id).await()
-                result.postValue(ApiResponse.success(response.data))
-            }catch (e: IOException){
-                e.printStackTrace()
-                result.postValue(
-                    ApiResponse.error(
-                        e.message.toString(),
-                        Plant()
-                    )
-                )
+                val response = apiService.getPlantById(id)
+                val data = response.data
+                if (data != null){
+                    emit(ApiResponse.Success(response.data))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception){
+                emit(ApiResponse.Error(e.toString()))
             }
-        }
-        EspressoIdlingResource.decrement()
-        return result
+        }.flowOn(Dispatchers.IO)
     }
 
-
-    override fun insertNewPlant(id: String, plant: PlantDetail): LiveData<ApiResponse<PlantDetail>> {
-        EspressoIdlingResource.increment()
-        val result = MutableLiveData<ApiResponse<PlantDetail>>()
-        CoroutineScope(Dispatchers.IO).launch {
+    override suspend fun insertNewPlant(
+        id: String,
+        plant: PlantDetail
+    ): Flow<ApiResponse<PlantDetail>> {
+        return flow {
             try {
-                val respoonse = apiService.insertPlantByUserId(id,plant).await()
-                result.postValue(ApiResponse.success(respoonse.data))
-            } catch (e: IOException){
-                e.printStackTrace()
-                result.postValue(
-                        ApiResponse.error(
-                                e.message.toString(),
-                                PlantDetail()
-                        )
-                )
+                val response = apiService.insertPlantByUserId(id,plant)
+                val data = response.data
+                if (data != null){
+                    emit(ApiResponse.Success(response.data))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception){
+                emit(ApiResponse.Error(e.toString()))
             }
-        }
-        EspressoIdlingResource.decrement()
-        return result
+        }.flowOn(Dispatchers.IO)
     }
 
-    override fun uploadImage(picture: MultipartBody.Part): LiveData<ApiResponse<UploadImage>> {
-        EspressoIdlingResource.increment()
-        val result = MutableLiveData<ApiResponse<UploadImage>>()
-        CoroutineScope(Dispatchers.IO).launch {
+    override suspend fun uploadImage(picture: MultipartBody.Part): Flow<ApiResponse<UploadImage>> {
+        return flow {
             try {
-                val respoonse = apiService.uploadPlantImage(picture).await()
-                result.postValue(ApiResponse.success(respoonse.data))
-            } catch (e: IOException){
-                e.printStackTrace()
-                result.postValue(
-                    ApiResponse.error(
-                        e.message.toString(),
-                        UploadImage()
-                    )
-                )
+                val response = apiService.uploadPlantImage(picture)
+                val data = response.data
+                if (data != null){
+                    emit(ApiResponse.Success(response.data))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception){
+                emit(ApiResponse.Error(e.toString()))
             }
-        }
-        EspressoIdlingResource.decrement()
-        return result
+        }.flowOn(Dispatchers.IO)
     }
 
-    override fun login(body: RequestBody): LiveData<ApiResponse<User>> {
-        EspressoIdlingResource.increment()
-        val result = MutableLiveData<ApiResponse<User>>()
-        CoroutineScope(Dispatchers.IO).launch {
+    override suspend fun login(body: RequestBody): Flow<ApiResponse<DataResponse>> {
+        return flow {
             try {
-                val respoonse = apiService.login(body).await()
-                result.postValue(ApiResponse.success(respoonse.data.user))
-            } catch (e: IOException){
-                e.printStackTrace()
-                result.postValue(
-                    ApiResponse.error(
-                        e.message.toString(),
-                        User()
-                    )
-                )
+                val response = apiService.login(body)
+                val data = response.data
+                if (data != null){
+                    emit(ApiResponse.Success(response.data))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception){
+                emit(ApiResponse.Error(e.toString()))
             }
-        }
-        EspressoIdlingResource.decrement()
-        return result
+        }.flowOn(Dispatchers.IO)
     }
 
 }

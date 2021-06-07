@@ -10,6 +10,7 @@ import com.example.capstonemobile.data.source.local.room.PlantDao
 import com.example.capstonemobile.data.source.local.room.PlantDatabase
 import com.example.capstonemobile.data.source.remote.RemoteDataSource
 import com.example.capstonemobile.data.source.remote.RemoteSource
+import com.example.capstonemobile.utils.AppExecutors
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,7 +27,11 @@ import javax.inject.Singleton
 object AppModule {
 
     @Provides
-    fun provideBase() = "https://yubisayu.et.r.appspot.com/"
+    fun provideBase() = "https://yubisayu.et.r.appspot.com"
+
+    @Provides
+    @Singleton
+    fun provideAppExecutor() = AppExecutors()
 
     @Singleton
     @Provides
@@ -61,7 +66,8 @@ object AppModule {
     fun provideContentRepository(
             contentRemoteSource: RemoteSource,
             contentLocalSource: LocalSource,
-    ): Repository = PlantRepository(contentRemoteSource,contentLocalSource)
+            appExecutors: AppExecutors
+    ): Repository = PlantRepository(contentRemoteSource,contentLocalSource,appExecutors)
 
     @Singleton
     @Provides

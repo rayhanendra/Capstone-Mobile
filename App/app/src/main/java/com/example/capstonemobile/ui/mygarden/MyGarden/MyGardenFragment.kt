@@ -10,11 +10,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.capstonemobile.databinding.FragmentMyGardenBinding
+import com.example.capstonemobile.ui.MainActivity
+import com.example.capstonemobile.ui.mygarden.PlantDetailActivity
 import com.example.capstonemobile.ui.mygarden.addPlant.AddPlantActivity
 import com.example.capstonemobile.utils.SessionManagement
+import com.ojanbelajar.moviekatalogue.utils.Resource
 import com.ojanbelajar.moviekatalogue.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.toast
 
 @AndroidEntryPoint
 class MyGardenFragment: Fragment(){
@@ -40,27 +46,31 @@ class MyGardenFragment: Fragment(){
             binding.progressBar.visibility = View.VISIBLE
             model.getAllUserPlant(session.user["id"].toString()).observe(viewLifecycleOwner, Observer { plants ->
                 if (plants != null){
-                    when(plants.status){
-                        Status.SUCCESS -> {
+                    when(plants){
+                        is Resource.Success -> {
                             Log.d("ojan",plants.data.toString())
                             if (plants.data != null) {
                                 binding.progressBar.visibility = View.GONE
-                                adapter.submitList(plants.data)
+                                adapter.setData(plants.data)
                             }
                         }
-                        Status.ERROR -> {
-                            toast("Something Wrong")
+                        is Resource.Loading -> {
+                            toast("Loading")
                         }
-
+                        is Resource.Error -> {
+                            toast("Error")
+                        }
                     }
                 }
 
             })
-
             with(binding.rvMyGarden) {
                 layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
                 setHasFixedSize(true)
                 this.adapter = adapter
+            }
+            adapter.onItemClick = { data ->
+                startActivity<PlantDetailActivity>("plant" to data)
             }
         }
     }

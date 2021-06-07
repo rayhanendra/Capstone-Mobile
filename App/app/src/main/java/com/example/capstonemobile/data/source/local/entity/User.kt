@@ -4,7 +4,6 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "users")
@@ -15,16 +14,10 @@ data class User(
         var id: String = "",
 
         @ColumnInfo(name = "fullName")
-        var fullName: String = "",
+        var fullname: String = "",
 
-        @ColumnInfo(name = "email")
-        var email: String = "",
-
-        @ColumnInfo(name = "password")
-        var password: String = "",
-
-        @ColumnInfo(name = "profilePicture")
-        var profilePicture: String = "",
+        @ColumnInfo(name = "image")
+        var image: String = "",
 
         @ColumnInfo(name = "address")
         var address: String = "",
@@ -36,5 +29,5 @@ data class User(
         var sex: Int = 0,
 
         @ColumnInfo(name = "birthDate")
-        var birthDate: String = "",
+        var role: String = "",
 ): Parcelable

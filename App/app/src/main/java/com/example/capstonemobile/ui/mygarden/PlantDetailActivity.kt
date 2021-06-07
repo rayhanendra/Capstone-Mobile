@@ -8,7 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
 import com.example.capstonemobile.databinding.ActivityPlantDetailBinding
+import com.example.capstonemobile.ui.MainActivity
+import com.ojanbelajar.moviekatalogue.utils.Resource
 import com.ojanbelajar.moviekatalogue.utils.Status
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 
@@ -37,13 +40,18 @@ class PlantDetailActivity: AppCompatActivity(){
     private fun getPlantDetail(id: String){
         model.getPlantDetail(id).observe(this, Observer { detail ->
             if (detail != null){
-                when(detail.status){
-                    Status.SUCCESS -> {
+                when(detail){
+                    is Resource.Success -> {
                         Log.d("ojan",detail.data.toString())
+                        startActivity<MainActivity>()
                     }
-                    Status.ERROR -> {
-                        toast("Something Wrong")
+                    is Resource.Loading -> {
+                        toast("Loading")
                     }
+                    is Resource.Error -> {
+                        toast("Error")
+                    }
+
                 }
             }
         })

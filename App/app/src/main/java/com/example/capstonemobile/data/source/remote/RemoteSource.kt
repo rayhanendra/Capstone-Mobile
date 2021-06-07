@@ -5,20 +5,24 @@ import com.example.capstonemobile.data.source.local.entity.Plant
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
 import com.example.capstonemobile.data.source.local.entity.UploadImage
 import com.example.capstonemobile.data.source.local.entity.User
+import com.example.capstonemobile.data.source.remote.response.DataResponse
+import com.example.capstonemobile.data.source.remote.response.PlantResponse
+import com.example.capstonemobile.data.source.remote.response.UserPlantResponse
+import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 interface RemoteSource {
 
-    fun getAllPlant(): LiveData<ApiResponse<List<Plant>>>
+    suspend fun getAllPlant(): Flow<ApiResponse<List<Plant>>>
 
-    fun getPlantByUserId(id: String): LiveData<ApiResponse<List<PlantDetail>>>
+    suspend fun getPlantByUserId(id: String): Flow<ApiResponse<List<PlantDetail>>>
 
-    fun getPlantById(id: String): LiveData<ApiResponse<Plant>>
+    suspend fun getPlantById(id: String): Flow<ApiResponse<Plant>>
 
-    fun insertNewPlant(id: String,plant: PlantDetail): LiveData<ApiResponse<PlantDetail>>
+    suspend fun insertNewPlant(id: String,plant: PlantDetail): Flow<ApiResponse<PlantDetail>>
 
-    fun uploadImage(picture: MultipartBody.Part): LiveData<ApiResponse<UploadImage>>
+    suspend fun uploadImage(picture: MultipartBody.Part): Flow<ApiResponse<UploadImage>>
 
-    fun login(body: RequestBody): LiveData<ApiResponse<User>>
+    suspend fun login(body: RequestBody): Flow<ApiResponse<DataResponse>>
 }

@@ -2,10 +2,7 @@ package com.example.capstonemobile.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
-import com.example.capstonemobile.data.source.local.entity.Plant
-import com.example.capstonemobile.data.source.local.entity.PlantDetail
-import com.example.capstonemobile.data.source.local.entity.UploadImage
-import com.example.capstonemobile.data.source.local.entity.User
+import com.example.capstonemobile.data.source.local.entity.*
 import com.ojanbelajar.moviekatalogue.utils.Resource
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
@@ -17,6 +14,8 @@ interface Repository {
     fun getPlantById(id: String): Flow<Resource<Plant>>
 
     fun getPlantByUserId(id: String): Flow<Resource<List<PlantDetail>>>
+
+    fun getDiseaseByUser(idUser: String,idPlant: String): Flow<Resource<List<DiseaseDetail>>>
 
     fun insertNewPlant(id: String, plant: PlantDetail): Flow<Resource<PlantDetail>>
 

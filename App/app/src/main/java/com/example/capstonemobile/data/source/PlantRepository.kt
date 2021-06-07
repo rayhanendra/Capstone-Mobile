@@ -2,10 +2,7 @@ package com.example.capstonemobile.data.source
 
 
 import com.example.capstonemobile.data.source.local.LocalSource
-import com.example.capstonemobile.data.source.local.entity.Plant
-import com.example.capstonemobile.data.source.local.entity.PlantDetail
-import com.example.capstonemobile.data.source.local.entity.UploadImage
-import com.example.capstonemobile.data.source.local.entity.User
+import com.example.capstonemobile.data.source.local.entity.*
 import com.example.capstonemobile.data.source.remote.ApiResponse
 import com.example.capstonemobile.data.source.remote.RemoteSource
 import com.example.capstonemobile.data.source.remote.response.DataResponse
@@ -75,6 +72,22 @@ class PlantRepository @Inject constructor(
             }
 
         }.asFlow()
+    }
+
+    override fun getDiseaseByUser(
+        idUser: String,
+        idPlant: String
+    ): Flow<Resource<List<DiseaseDetail>>> {
+       return object : NetworkOnlyResource<List<DiseaseDetail>,List<DiseaseDetail>>(){
+           override fun loadFromNetwork(data: List<DiseaseDetail>): Flow<List<DiseaseDetail>> {
+               return flowOf(data)
+           }
+
+           override suspend fun createCall(): Flow<ApiResponse<List<DiseaseDetail>>> {
+                return remoteSource.getDiseaseByUser(idUser,idPlant)
+           }
+
+       }.asFlow()
     }
 
     override fun insertNewPlant(id: String, plant: PlantDetail): Flow<Resource<PlantDetail>> {

@@ -22,14 +22,14 @@ data class PlantDetail(
         @ColumnInfo(name = "userId")
         var userId: String = "",
 
-        @ColumnInfo(name = "userPlantName")
-        var userPlantName: String = "",
+        @ColumnInfo(name = "plantName")
+        var plantName: String = "",
 
         @ColumnInfo(name = "plantHealth")
         var plantHealth: Double = 0.0,
 
-        @ColumnInfo(name = "plantImage")
-        var plantImage: String = "",
+        @ColumnInfo(name = "plantImg")
+        var plantImg: String = "",
 
         @ColumnInfo(name = "plantDetail")
         var plantDetail: String = "",
@@ -37,8 +37,8 @@ data class PlantDetail(
         @ColumnInfo(name = "plantPhase")
         var plantPhase: String = "",
 
-        @ColumnInfo(name = "plantSuggestion")
-        var plantSuggestion: String = "",
+        @ColumnInfo(name = "plantSuggest")
+        var plantSuggest: String = "",
 
         @ColumnInfo(name = "createdAt")
         var createdAt: Double = 0.0

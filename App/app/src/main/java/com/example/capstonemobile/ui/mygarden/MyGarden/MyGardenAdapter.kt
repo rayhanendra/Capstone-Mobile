@@ -47,11 +47,11 @@ class MyGardenAdapter (private val context: Context): RecyclerView.Adapter<MyGar
     inner class MyGardenViewHolder(private val binding: ItemMyGardenBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(plant: PlantDetail) {
             with(binding) {
-                tvUserPlant.text = plant.userPlantName
+                tvUserPlant.text = plant.plantName
                 tvPlantPhase.text = plant.plantPhase
                 tvCreatedAt.text = plant.createdAt.toString()
                 Glide.with(itemView.context)
-                    .load(plant.plantImage)
+                    .load(plant.plantImg)
                     .centerCrop()
                     .apply(
                         RequestOptions.placeholderOf(R.drawable.ic_loading)

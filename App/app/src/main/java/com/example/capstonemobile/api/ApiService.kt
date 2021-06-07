@@ -13,14 +13,17 @@ interface ApiService {
     @GET("/api/plants")
     suspend fun getPlant(): PlantResponse
 
-    @GET("/api/users/{userId}/plants")
-    suspend fun getPlantByUserId(@Path("userId") userId: String): UserPlantResponse
+    @GET
+    suspend fun getPlantByUserId(@Url url: String): UserPlantResponse
 
-    @GET("/api/plants/{plantId}")
-    suspend fun getPlantById(@Path("plantId") plantId: String): PlantDetailResponse
+    @GET
+    suspend fun getPlantById(@Url url: String): PlantDetailResponse
 
-    @POST("/api/users/{userId}/plants")
-    suspend fun insertPlantByUserId(@Path("userId") userId: String,@Body plant: PlantDetail): InsertNewPlantResponse
+    @GET
+    suspend fun getDiseaseByUser(@Url url: String): DiseaseResponse
+
+    @POST
+    suspend fun insertPlantByUserId(@Url url: String , @Body plant: PlantDetail): InsertNewPlantResponse
 
     @POST("/api/user/_sign-in")
     suspend fun login(@Body body: RequestBody): UserResponse

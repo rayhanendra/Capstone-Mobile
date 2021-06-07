@@ -11,10 +11,12 @@ import com.example.capstonemobile.databinding.ActivityPlantDetailBinding
 import com.example.capstonemobile.ui.MainActivity
 import com.ojanbelajar.moviekatalogue.utils.Resource
 import com.ojanbelajar.moviekatalogue.utils.Status
+import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 
+@AndroidEntryPoint
 class PlantDetailActivity: AppCompatActivity(){
 
     private lateinit var binding: ActivityPlantDetailBinding
@@ -43,7 +45,6 @@ class PlantDetailActivity: AppCompatActivity(){
                 when(detail){
                     is Resource.Success -> {
                         Log.d("ojan",detail.data.toString())
-                        startActivity<MainActivity>()
                     }
                     is Resource.Loading -> {
                         toast("Loading")

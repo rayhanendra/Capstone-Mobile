@@ -10,32 +10,28 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.capstonemobile.data.source.local.entity.Phase
 import com.example.capstonemobile.data.source.local.entity.Plant
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
 import com.example.capstonemobile.databinding.ActivityAddPlantBinding
-import com.example.capstonemobile.ui.MainActivity
 import com.example.capstonemobile.ui.mygarden.PlantDetailActivity
 import com.example.capstonemobile.ui.mygarden.addPlant.PhaseData.listData
 import com.example.capstonemobile.utils.SessionManagement
 import com.ojanbelajar.moviekatalogue.utils.Resource
-import com.ojanbelajar.moviekatalogue.utils.Status
+import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
-import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-
+@AndroidEntryPoint
 class AddPlantActivity: AppCompatActivity(){
 
     companion object {

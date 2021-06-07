@@ -4,10 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.capstonemobile.api.ApiService
-import com.example.capstonemobile.data.source.local.entity.Plant
-import com.example.capstonemobile.data.source.local.entity.PlantDetail
-import com.example.capstonemobile.data.source.local.entity.UploadImage
-import com.example.capstonemobile.data.source.local.entity.User
+import com.example.capstonemobile.data.source.local.entity.*
 import com.example.capstonemobile.data.source.remote.response.DataResponse
 import com.ojanbelajar.moviekatalogue.utils.EspressoIdlingResource
 import kotlinx.coroutines.CoroutineScope
@@ -44,7 +41,7 @@ class RemoteDataSource @Inject constructor(
     override suspend fun getPlantByUserId(id: String): Flow<ApiResponse<List<PlantDetail>>> {
         return flow {
             try {
-                val response = apiService.getPlantByUserId(id)
+                val response = apiService.getPlantByUserId("/api/users/${id}/plants")
                 val data = response.data
                 if (data.isNotEmpty()){
                     emit(ApiResponse.Success(response.data))
@@ -60,7 +57,26 @@ class RemoteDataSource @Inject constructor(
     override suspend fun getPlantById(id: String): Flow<ApiResponse<Plant>> {
         return flow {
             try {
-                val response = apiService.getPlantById(id)
+                val response = apiService.getPlantById("/api/plants/${id}")
+                val data = response.data
+                if (data != null){
+                    emit(ApiResponse.Success(response.data))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception){
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun getDiseaseByUser(
+        idUser: String,
+        idPlant: String
+    ): Flow<ApiResponse<List<DiseaseDetail>>> {
+        return flow {
+            try {
+                val response = apiService.getDiseaseByUser("/api/users/${idUser}/plants/${idPlant}/disease")
                 val data = response.data
                 if (data != null){
                     emit(ApiResponse.Success(response.data))
@@ -79,7 +95,7 @@ class RemoteDataSource @Inject constructor(
     ): Flow<ApiResponse<PlantDetail>> {
         return flow {
             try {
-                val response = apiService.insertPlantByUserId(id,plant)
+                val response = apiService.insertPlantByUserId("/api/users/${id}/plants",plant)
                 val data = response.data
                 if (data != null){
                     emit(ApiResponse.Success(response.data))

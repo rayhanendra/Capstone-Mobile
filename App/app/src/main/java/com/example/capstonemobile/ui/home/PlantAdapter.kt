@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
 import com.example.capstonemobile.databinding.ItemPlantPagerBinding
 import com.example.capstonemobile.ui.mygarden.PlantDetailActivity
@@ -43,7 +44,7 @@ inner class PlantAdapterViewHolder(private val binding: ItemPlantPagerBinding) :
 
     fun bind(plantDetail: PlantDetail) {
         Log.d("ojan", plantDetail.toString())
-        // binding.slidePlant.imageResource = plantDetail.image
+        binding.textHome.text = plantDetail.plantName
     }
 
     init {

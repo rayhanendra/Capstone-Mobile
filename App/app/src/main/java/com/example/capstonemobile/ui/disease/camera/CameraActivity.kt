@@ -48,8 +48,8 @@ class CameraActivity: AppCompatActivity(), View.OnClickListener,
     private var rgbBytes: IntArray? = null
     private lateinit var previewReader: ImageReader
     private val mInputSize = 224
-    private val mModelPath = "model.tflite"
-    private val mLabelPath = "labels.txt"
+    private val mModelPath = "mobilenet_v1_1.0_224_quant.tflite"
+    private val mLabelPath = "labels_mobilenet_quant_v1_224.txt"
     private var rgbFrameBitmap: Bitmap? = null
     private var imageReader: ImageReader? = null
     private var backgroundThread: HandlerThread? = null

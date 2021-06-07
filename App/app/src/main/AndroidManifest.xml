@@ -45,6 +45,8 @@
         <activity
             android:name=".ui.mygarden.DetailDiseaseHistoryActivity"
             android:theme="@style/Theme.CapstoneMobile.NoActionBar" />
+        <activity android:name=".ui.disease.camera.CameraActivity"/>
+
     </application>
 
 </manifest>

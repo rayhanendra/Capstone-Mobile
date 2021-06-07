@@ -1,10 +1,7 @@
 package com.example.capstonemobile.data.source.remote
 
 import androidx.lifecycle.LiveData
-import com.example.capstonemobile.data.source.local.entity.Plant
-import com.example.capstonemobile.data.source.local.entity.PlantDetail
-import com.example.capstonemobile.data.source.local.entity.UploadImage
-import com.example.capstonemobile.data.source.local.entity.User
+import com.example.capstonemobile.data.source.local.entity.*
 import com.example.capstonemobile.data.source.remote.response.DataResponse
 import com.example.capstonemobile.data.source.remote.response.PlantResponse
 import com.example.capstonemobile.data.source.remote.response.UserPlantResponse
@@ -19,6 +16,8 @@ interface RemoteSource {
     suspend fun getPlantByUserId(id: String): Flow<ApiResponse<List<PlantDetail>>>
 
     suspend fun getPlantById(id: String): Flow<ApiResponse<Plant>>
+
+    suspend fun getDiseaseByUser(idUser: String,idPlant: String): Flow<ApiResponse<List<DiseaseDetail>>>
 
     suspend fun insertNewPlant(id: String,plant: PlantDetail): Flow<ApiResponse<PlantDetail>>
 

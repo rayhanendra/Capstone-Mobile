@@ -48,7 +48,7 @@ class MyGardenFragment: Fragment(){
                 if (plants != null){
                     when(plants){
                         is Resource.Success -> {
-                            Log.d("ojan",plants.data.toString())
+                            Log.d("mygarden",plants.data.toString())
                             if (plants.data != null) {
                                 binding.progressBar.visibility = View.GONE
                                 adapter.setData(plants.data)

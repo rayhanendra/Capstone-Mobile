@@ -13,9 +13,13 @@ interface Repository {
 
     fun getPlantByUserId(id: String): Flow<Resource<List<PlantDetail>>>
 
-    fun getDiseaseByUser(idUser: String,idPlant: String): Flow<Resource<List<DiseaseDetailEntity>>>
+    fun getDisease(): Flow<Resource<List<DiseaseEntity>>>
 
-    fun getDiseaseById(idUser: String, idPlant: String, id: String): Flow<Resource<DiseaseDetailEntity>>
+    fun getDiseaseByUserId(idUser: String,idPlant: String): Flow<Resource<List<DiseaseByUserEntity>>>
+
+//    fun getDiseaseById(idUser: String, idPlant: String, id: String): Flow<Resource<DiseaseDetailEntity>>
+
+//    fun getCheckupByUserId(idUser: String, idPlant: String) :
 
     fun insertNewPlant(id: String, plant: PlantDetail): Flow<Resource<PlantDetail>>
 

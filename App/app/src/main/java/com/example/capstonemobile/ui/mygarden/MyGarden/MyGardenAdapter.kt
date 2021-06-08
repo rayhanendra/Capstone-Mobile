@@ -58,11 +58,6 @@ class MyGardenAdapter (private val context: Context): RecyclerView.Adapter<MyGar
                             .error(R.drawable.ic_error))
                     .into(ivPlantImg)
 
-                itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, PlantDetailActivity::class.java)
-                    intent.putExtra(PlantDetailActivity.EXTRA_PLANT, plant.plantId)
-                    itemView.context.startActivity(intent)
-                }
             }
         }
         init {

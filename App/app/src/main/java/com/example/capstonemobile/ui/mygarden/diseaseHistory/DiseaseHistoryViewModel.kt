@@ -8,5 +8,8 @@ import com.example.capstonemobile.data.source.Repository
 class DiseaseHistoryViewModel @ViewModelInject constructor(
     private val repository: Repository
 ): ViewModel(){
-    fun getAllUserPlantDiseases(idUser: String, idPlant: String ) = repository.getDiseaseByUser(idUser, idPlant).asLiveData()
+
+    val diseases = repository.getDisease().asLiveData()
+
+    fun getAllUserPlantDiseases(idUser: String, idPlant: String) = repository.getDiseaseByUserId(idUser, idPlant).asLiveData()
 }

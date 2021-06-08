@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "checkups")
 @Parcelize
-data class Checkup(
+data class CheckupEntity(
         @PrimaryKey
         @ColumnInfo(name = "id")
         @NonNull
@@ -32,5 +32,12 @@ data class Checkup(
         var plantPotassium: Double = 0.0,
 
         @ColumnInfo(name = "plantPhosphorus")
-        var plantPhosphorus: Double = 0.0
+        var plantPhosphorus: Double = 0.0,
+
+        @ColumnInfo(name = "createdAt")
+        var createdAt: Double = 0.0,
+
+        @ColumnInfo(name = "updatedAt")
+        var updatedAt: Double = 0.0
+
 ): Parcelable

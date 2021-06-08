@@ -14,9 +14,13 @@ interface RemoteSource {
 
     suspend fun getPlantById(id: String): Flow<ApiResponse<Plant>>
 
-    suspend fun getDiseaseByUser(idUser: String,idPlant: String): Flow<ApiResponse<List<DiseaseDetailEntity>>>
+    suspend fun getAllDisease(): Flow<ApiResponse<List<DiseaseEntity>>>
 
-    suspend fun getDiseaseById(idUser: String, idPlant: String, id: String): Flow<ApiResponse<DiseaseDetailEntity>>
+    suspend fun getDiseaseByUserId(idUser: String,idPlant: String): Flow<ApiResponse<List<DiseaseByUserEntity>>>
+
+//    suspend fun getDiseaseById(idUser: String, idPlant: String, id: String): Flow<ApiResponse<DiseaseByUserEntity>>
+
+    suspend fun getCheckupByUserId(idUser: String, idPlant: String) : Flow<ApiResponse<List<CheckupEntity>>>
 
     suspend fun insertNewPlant(id: String,plant: PlantDetail): Flow<ApiResponse<PlantDetail>>
 

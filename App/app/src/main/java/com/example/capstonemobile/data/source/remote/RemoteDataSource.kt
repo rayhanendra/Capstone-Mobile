@@ -62,13 +62,69 @@ class RemoteDataSource @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun getDiseaseByUser(
-        idUser: String,
-        idPlant: String
-    ): Flow<ApiResponse<List<DiseaseDetailEntity>>> {
+    override suspend fun getAllDisease(): Flow<ApiResponse<List<DiseaseEntity>>> {
         return flow {
             try {
-                val response = apiService.getDiseaseByUser("/api/users/${idUser}/plants/${idPlant}/disease")
+                val response = apiService.getDisease("/api/plants/diseases")
+                val data = response.data
+                if (data != null){
+                    emit(ApiResponse.Success(response.data))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun getDiseaseByUserId(
+        idUser: String,
+        idPlant: String
+    ): Flow<ApiResponse<List<DiseaseByUserEntity>>> {
+        return flow {
+            try {
+                val response = apiService.getDiseaseByUser("/api/users/${idUser}/plants/${idPlant}/diseases")
+                val data = response.data
+                if (data != null) {
+                    emit(ApiResponse.Success(response.data))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+
+//    override suspend fun getDiseaseById(
+//        idUser: String,
+//        idPlant: String,
+//        id: String
+//    ): Flow<ApiResponse<DiseaseEntity>> {
+//        return flow {
+//            try {
+//                val response = apiService.getDiseaseById("/api/users/${idUser}/plants/${idPlant}/diseases/${id}")
+//                val data = response.data
+//                if (data != null) {
+//                    emit(ApiResponse.Success(response.data))
+//                } else {
+//                    emit(ApiResponse.Empty)
+//                }
+//            } catch (e: Exception) {
+//                emit(ApiResponse.Error(e.toString()))
+//            }
+//        } .flowOn((Dispatchers.IO))
+//    }
+
+    override suspend fun getCheckupByUserId(
+        idUser: String,
+        idPlant: String
+    ): Flow<ApiResponse<List<CheckupEntity>>> {
+        return flow {
+            try {
+                val response = apiService.getCheckupByUser("/api/users/${idUser}/plants/${idPlant}/diseases")
                 val data = response.data
                 if (data != null){
                     emit(ApiResponse.Success(response.data))
@@ -79,26 +135,6 @@ class RemoteDataSource @Inject constructor(
                 emit(ApiResponse.Error(e.toString()))
             }
         }.flowOn(Dispatchers.IO)
-    }
-
-    override suspend fun getDiseaseById(
-        idUser: String,
-        idPlant: String,
-        id: String
-    ): Flow<ApiResponse<DiseaseDetailEntity>> {
-        return flow {
-            try {
-                val response = apiService.getDiseaseById("/api/users/${idUser}/plants/${idPlant}/diseases/${id}")
-                val data = response.data
-                if (data != null) {
-                    emit(ApiResponse.Success(response.data))
-                } else {
-                    emit(ApiResponse.Empty)
-                }
-            } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-            }
-        } .flowOn((Dispatchers.IO))
     }
 
     override suspend fun insertNewPlant(

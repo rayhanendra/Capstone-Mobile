@@ -9,8 +9,10 @@ import com.example.capstonemobile.data.source.local.entity.DiseaseDetailEntity
 import com.example.capstonemobile.databinding.ActivityDetailDiseaseHistoryBinding
 import com.example.capstonemobile.utils.SessionManagement
 import com.ojanbelajar.moviekatalogue.utils.Resource
+import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.anko.toast
 
+@AndroidEntryPoint
 class DetailDiseaseHistoryActivity : AppCompatActivity() {
 
     private lateinit var session: SessionManagement
@@ -31,31 +33,31 @@ class DetailDiseaseHistoryActivity : AppCompatActivity() {
 
         val idPlant: String = intent.getStringExtra("extra_plant").toString()
         val id: String = intent.getStringExtra("extra_disease").toString()
-        getDiseaseDetail(idPlant, id)
+//        getDiseaseDetail(idPlant, id)
         back()
     }
 
-    private fun getDiseaseDetail(idPlant: String, id: String ) {
-        model.getDiseaseById(session.user["id"].toString(), idPlant, id).observe(this, Observer { disease ->
-            if (disease !=null) {
-                when(disease) {
-                    is Resource.Success -> {
-                        Log.d("ojan",disease.data.toString())
-                        if ( disease.data != null) {
-                                populateDiseaseDetail(disease)
-                        }
-                    }
-
-                    is Resource.Loading -> {
-                        toast("Loading")
-                    }
-                    is Resource.Error -> {
-                        toast("Error")
-                    }
-                }
-            }
-        })
-    }
+//    private fun getDiseaseDetail(idPlant: String, id: String ) {
+//        model.getDiseaseById(session.user["id"].toString(), idPlant, id).observe(this, Observer { disease ->
+//            if (disease !=null) {
+//                when(disease) {
+//                    is Resource.Success -> {
+//                        Log.d("ojan",disease.data.toString())
+//                        if ( disease.data != null) {
+//                                populateDiseaseDetail(disease)
+//                        }
+//                    }
+//
+//                    is Resource.Loading -> {
+//                        toast("Loading")
+//                    }
+//                    is Resource.Error -> {
+//                        toast("Error")
+//                    }
+//                }
+//            }
+//        })
+//    }
 
     private fun populateDiseaseDetail(diseaseDetailEntity: Resource<DiseaseDetailEntity>) {
         binding.tvDiseaseName.text = diseaseDetailEntity.data?.id

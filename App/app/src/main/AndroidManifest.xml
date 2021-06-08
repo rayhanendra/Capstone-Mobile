@@ -31,7 +31,7 @@
             android:name=".ui.mygarden.PlantDetailActivity"
             android:theme="@style/Theme.CapstoneMobile.NoActionBar" />
         <activity
-            android:name=".ui.mygarden.DailyCheckupActivity"
+            android:name=".ui.mygarden.checkup.DailyCheckupActivity"
             android:theme="@style/Theme.CapstoneMobile.NoActionBar" />
         <activity
             android:name=".ui.mygarden.AddDailyCheckupActivity"

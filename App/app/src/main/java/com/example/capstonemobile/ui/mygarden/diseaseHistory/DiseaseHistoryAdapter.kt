@@ -5,16 +5,17 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.capstonemobile.data.source.local.entity.DiseaseDetailEntity
+import com.example.capstonemobile.data.source.local.entity.DiseaseByUserEntity
+import com.example.capstonemobile.data.source.local.entity.DiseaseEntity
 import com.example.capstonemobile.databinding.ItemHistoryDiseaseBinding
 import com.example.capstonemobile.ui.mygarden.diseaseHistoryDetail.DetailDiseaseHistoryActivity
 
 class DiseaseHistoryAdapter (private val context: Context): RecyclerView.Adapter<DiseaseHistoryAdapter.DiseaseHistoryViewHolder>() {
 
-    private var listData = ArrayList<DiseaseDetailEntity>()
-    var onItemClick: ((DiseaseDetailEntity) -> Unit)? = null
+    private var listData = ArrayList<DiseaseEntity>()
+    var onItemClick: ((DiseaseEntity) -> Unit)? = null
 
-    fun setData(newListData: List<DiseaseDetailEntity>?) {
+    fun setData(newListData: List<DiseaseEntity>?) {
         if (newListData == null) return
         listData.clear()
         listData.addAll(newListData)
@@ -34,11 +35,10 @@ class DiseaseHistoryAdapter (private val context: Context): RecyclerView.Adapter
     override fun getItemCount(): Int = listData.size
 
     inner class DiseaseHistoryViewHolder(private val binding: ItemHistoryDiseaseBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(diseaseEntity: DiseaseDetailEntity) {
+        fun bind(diseaseEntity: DiseaseEntity) {
             with(binding) {
-                tvPlantName.text = diseaseEntity.id
-                tvPlantDate.text= diseaseEntity.userPlantId
-                tvPlantOverall.text = diseaseEntity.planDiseaseId
+                tvPlantName.text = diseaseEntity.diseasesName
+                tvPlantDate.text= diseaseEntity.createdAt
 
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailDiseaseHistoryActivity::class.java)

@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "diseases")
 @Parcelize
-data class Disease(
+data class DiseaseEntity(
         @PrimaryKey
         @ColumnInfo(name = "id")
         @NonNull
@@ -24,6 +24,12 @@ data class Disease(
         @ColumnInfo(name = "diseasesTreatment")
         var diseasesTreatment: String = "",
 
-        @ColumnInfo(name = "diseasesTreatmentVideos")
-        var diseasesTreatmentVideos: String = ""
+        @ColumnInfo(name = "diseaseTreatmentVid")
+        var diseaseTreatmentVid: String = "",
+
+        @ColumnInfo(name = "createdAt")
+        var createdAt: String = "",
+
+        @ColumnInfo(name = "updatedAt")
+        var updatedAt: String = ""
 ):Parcelable

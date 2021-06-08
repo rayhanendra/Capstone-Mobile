@@ -20,10 +20,16 @@ interface ApiService {
     suspend fun getPlantById(@Url url: String): PlantDetailResponse
 
     @GET
-    suspend fun getDiseaseByUser(@Url url: String): DiseaseResponse
+    suspend fun getDisease(@Url url: String): DiseaseResponse
+
+    @GET
+    suspend fun getDiseaseByUser(@Url url: String): DiseaseByUserResponse
 
     @GET
     suspend fun getDiseaseById(@Url url: String): DiseaseDetailResponse
+
+    @GET
+    suspend fun getCheckupByUser(@Url url: String) : CheckupByUserResponse
 
     @POST
     suspend fun insertPlantByUserId(@Url url: String , @Body plant: PlantDetail): InsertNewPlantResponse

@@ -77,18 +77,31 @@ class PlantRepository @Inject constructor(
     override fun getDiseaseByUser(
         idUser: String,
         idPlant: String
-    ): Flow<Resource<List<DiseaseDetail>>> {
-       return object : NetworkOnlyResource<List<DiseaseDetail>,List<DiseaseDetail>>(){
-           override fun loadFromNetwork(data: List<DiseaseDetail>): Flow<List<DiseaseDetail>> {
+    ): Flow<Resource<List<DiseaseDetailEntity>>> {
+       return object : NetworkOnlyResource<List<DiseaseDetailEntity>,List<DiseaseDetailEntity>>(){
+           override fun loadFromNetwork(data: List<DiseaseDetailEntity>): Flow<List<DiseaseDetailEntity>> {
                return flowOf(data)
            }
 
-           override suspend fun createCall(): Flow<ApiResponse<List<DiseaseDetail>>> {
+           override suspend fun createCall(): Flow<ApiResponse<List<DiseaseDetailEntity>>> {
                 return remoteSource.getDiseaseByUser(idUser,idPlant)
            }
 
        }.asFlow()
     }
+
+    override fun getDiseaseById(idUser: String, idPlant: String, id: String) : Flow<Resource<DiseaseDetailEntity>> {
+        return object : NetworkOnlyResource<DiseaseDetailEntity, DiseaseDetailEntity>() {
+            override fun loadFromNetwork(data: DiseaseDetailEntity): Flow<DiseaseDetailEntity> {
+                return flowOf(data)
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<DiseaseDetailEntity>> {
+                return remoteSource.getDiseaseById(idUser, idPlant, id)
+            }
+        }.asFlow()
+    }
+
 
     override fun insertNewPlant(id: String, plant: PlantDetail): Flow<Resource<PlantDetail>> {
         return object : NetworkOnlyResource<PlantDetail,PlantDetail>(){

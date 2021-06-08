@@ -22,6 +22,9 @@ interface ApiService {
     @GET
     suspend fun getDiseaseByUser(@Url url: String): DiseaseResponse
 
+    @GET
+    suspend fun getDiseaseById(@Url url: String): DiseaseDetailResponse
+
     @POST
     suspend fun insertPlantByUserId(@Url url: String , @Body plant: PlantDetail): InsertNewPlantResponse
 

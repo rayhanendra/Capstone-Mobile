@@ -1,10 +1,7 @@
 package com.example.capstonemobile.data.source.remote
 
-import androidx.lifecycle.LiveData
 import com.example.capstonemobile.data.source.local.entity.*
 import com.example.capstonemobile.data.source.remote.response.DataResponse
-import com.example.capstonemobile.data.source.remote.response.PlantResponse
-import com.example.capstonemobile.data.source.remote.response.UserPlantResponse
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -17,7 +14,9 @@ interface RemoteSource {
 
     suspend fun getPlantById(id: String): Flow<ApiResponse<Plant>>
 
-    suspend fun getDiseaseByUser(idUser: String,idPlant: String): Flow<ApiResponse<List<DiseaseDetail>>>
+    suspend fun getDiseaseByUser(idUser: String,idPlant: String): Flow<ApiResponse<List<DiseaseDetailEntity>>>
+
+    suspend fun getDiseaseById(idUser: String, idPlant: String, id: String): Flow<ApiResponse<DiseaseDetailEntity>>
 
     suspend fun insertNewPlant(id: String,plant: PlantDetail): Flow<ApiResponse<PlantDetail>>
 

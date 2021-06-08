@@ -5,8 +5,8 @@ import com.example.capstonemobile.data.source.local.entity.DiseaseDetailEntity
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class DiseaseResponse (
-        var code: String = "",
-        var status: String = "",
-        var data: List<DiseaseDetailEntity>
-):Parcelable
+data class DiseaseDetailResponse(
+    var code: String = "",
+    var status: String = "",
+    var data: DiseaseDetailEntity = DiseaseDetailEntity()
+) : Parcelable

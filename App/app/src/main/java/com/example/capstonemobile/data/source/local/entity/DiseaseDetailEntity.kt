@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "disease_detail")
 @Parcelize
-data class DiseaseDetail (
+data class DiseaseDetailEntity (
     @PrimaryKey
     @ColumnInfo(name = "id")
     @NonNull
@@ -21,6 +21,5 @@ data class DiseaseDetail (
 
     @ColumnInfo(name = "planDiseaseId")
     var planDiseaseId: String = "",
-
 
 ): Parcelable

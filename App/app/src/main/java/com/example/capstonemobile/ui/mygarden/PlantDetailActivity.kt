@@ -8,12 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
 import com.example.capstonemobile.databinding.ActivityPlantDetailBinding
-import com.example.capstonemobile.ui.MainActivity
+import com.example.capstonemobile.ui.mygarden.diseaseHistory.DiseaseHistoryActivity
 import com.ojanbelajar.moviekatalogue.utils.Resource
-import com.ojanbelajar.moviekatalogue.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 
 @AndroidEntryPoint
@@ -35,7 +32,7 @@ class PlantDetailActivity: AppCompatActivity(){
 
         getPlantDetail(plant?.plantId ?: "")
         dailyCheckUp()
-        disease()
+        disease(plant?.plantId ?: "")
         back()
     }
 
@@ -69,10 +66,11 @@ class PlantDetailActivity: AppCompatActivity(){
         }
     }
 
-    private fun disease() {
+    private fun disease(id: String) {
         val button = binding.cvDisease
         button.setOnClickListener {
             val intent = Intent(this, DiseaseHistoryActivity::class.java)
+            intent.putExtra("EXTRA_PLANT", id)
             startActivity(intent)
         }
     }

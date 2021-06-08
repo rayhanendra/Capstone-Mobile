@@ -69,7 +69,7 @@
             app:layout_constraintTop_toBottomOf="@+id/image_frame">
 
             <TextView
-                android:id="@+id/disease_name"
+                android:id="@+id/tv_disease_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
@@ -94,12 +94,12 @@
                 android:layout_marginHorizontal="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/disease_name"
+                app:layout_constraintStart_toEndOf="@+id/tv_disease_name"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="inifamilykunyitlatin" />
 
             <TextView
-                android:id="@+id/disease_description"
+                android:id="@+id/tv_disease_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="2dp"
@@ -110,7 +110,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/disease_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_disease_name"
                 tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu vel maecenas vitae turpis. Aliquet cursus morbi arcu quis fames." />
 
             <androidx.cardview.widget.CardView
@@ -121,7 +121,7 @@
                 app:cardCornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/disease_description">
+                app:layout_constraintTop_toBottomOf="@+id/tv_disease_description">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

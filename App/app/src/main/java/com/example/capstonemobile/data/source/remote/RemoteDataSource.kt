@@ -1,20 +1,12 @@
 package com.example.capstonemobile.data.source.remote
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.capstonemobile.api.ApiService
 import com.example.capstonemobile.data.source.local.entity.*
 import com.example.capstonemobile.data.source.remote.response.DataResponse
-import com.ojanbelajar.moviekatalogue.utils.EspressoIdlingResource
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.await
-import java.io.IOException
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
@@ -73,7 +65,7 @@ class RemoteDataSource @Inject constructor(
     override suspend fun getDiseaseByUser(
         idUser: String,
         idPlant: String
-    ): Flow<ApiResponse<List<DiseaseDetail>>> {
+    ): Flow<ApiResponse<List<DiseaseDetailEntity>>> {
         return flow {
             try {
                 val response = apiService.getDiseaseByUser("/api/users/${idUser}/plants/${idPlant}/disease")
@@ -87,6 +79,26 @@ class RemoteDataSource @Inject constructor(
                 emit(ApiResponse.Error(e.toString()))
             }
         }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun getDiseaseById(
+        idUser: String,
+        idPlant: String,
+        id: String
+    ): Flow<ApiResponse<DiseaseDetailEntity>> {
+        return flow {
+            try {
+                val response = apiService.getDiseaseById("/api/users/${idUser}/plants/${idPlant}/diseases/${id}")
+                val data = response.data
+                if (data != null) {
+                    emit(ApiResponse.Success(response.data))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+            }
+        } .flowOn((Dispatchers.IO))
     }
 
     override suspend fun insertNewPlant(

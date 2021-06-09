@@ -2,6 +2,7 @@ package com.example.capstonemobile.ui.mygarden.checkup
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -69,43 +70,46 @@ class AddDailyCheckupActivity: AppCompatActivity() {
     private fun save() {
         val button = binding.btnSave
         button.setOnClickListener {
-            val list = ArrayList<ArrayList<Double>>()
-            val firstList = ArrayList<Double>()
-            firstList.add(binding.editTemperature.text.toString().toDouble())
-            firstList.add(binding.editHumidity.text.toString().toDouble())
-            firstList.add(enumModel.toDouble())
-            firstList.add(0.0)
-            val secondList = ArrayList<Double>()
-            secondList.add(binding.editTemperature.text.toString().toDouble())
-            secondList.add(binding.editHumidity.text.toString().toDouble())
-            secondList.add(enumModel.toDouble())
-            secondList.add(1.0)
-            val thirdList = ArrayList<Double>()
-            thirdList.add(binding.editTemperature.text.toString().toDouble())
-            thirdList.add(binding.editHumidity.text.toString().toDouble())
-            thirdList.add(enumModel.toDouble())
-            thirdList.add(2.0)
-            list.add(firstList)
-            list.add(secondList)
-            list.add(thirdList)
-            val body = createJsonRequestBody("instances" to list)
-            model.insertNpk(body).observe(this, Observer { detail ->
-                if (detail != null){
-                    when(detail){
-                        is Resource.Success -> {
-                            val npk = detail.data
-                            startActivity<DetailDailyCheckupActivity>("npk" to npk)
-                        }
-                        is Resource.Loading -> {
-                            toast("Loading")
-                        }
-                        is Resource.Error -> {
-                            toast("Error")
-                        }
+            if (binding.editHumidity.text.isNotEmpty() && binding.editTemperature.text.isNotEmpty()) {
+                val list = ArrayList<ArrayList<Double>>()
+                val firstList = ArrayList<Double>()
+                firstList.add(binding.editTemperature.text.toString().toDouble())
+                firstList.add(binding.editHumidity.text.toString().toDouble())
+                firstList.add(enumModel.toDouble())
+                firstList.add(0.0)
+                val secondList = ArrayList<Double>()
+                secondList.add(binding.editTemperature.text.toString().toDouble())
+                secondList.add(binding.editHumidity.text.toString().toDouble())
+                secondList.add(enumModel.toDouble())
+                secondList.add(1.0)
+                val thirdList = ArrayList<Double>()
+                thirdList.add(binding.editTemperature.text.toString().toDouble())
+                thirdList.add(binding.editHumidity.text.toString().toDouble())
+                thirdList.add(enumModel.toDouble())
+                thirdList.add(2.0)
+                list.add(firstList)
+                list.add(secondList)
+                list.add(thirdList)
+                val body = createJsonRequestBody("instances" to list)
+                model.insertNpk(body).observe(this, Observer { detail ->
+                    if (detail != null) {
+                        when (detail) {
+                            is Resource.Success -> {
+                                val npk = detail.data
+                                startActivity<DetailDailyCheckupActivity>("npk" to npk)
+                            }
+                            is Resource.Loading -> {
+                                toast("Loading")
+                            }
+                            is Resource.Error -> {
+                                Log.d("ojan", detail.message.toString())
+                                toast("Error")
+                            }
 
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     }
 

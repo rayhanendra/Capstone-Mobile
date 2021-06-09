@@ -10,17 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.capstonemobile.databinding.FragmentMyGardenBinding
-import com.example.capstonemobile.ui.MainActivity
 import com.example.capstonemobile.ui.mygarden.PlantDetailActivity
 import com.example.capstonemobile.ui.mygarden.addPlant.AddPlantActivity
 import com.example.capstonemobile.utils.SessionManagement
 import com.ojanbelajar.moviekatalogue.utils.Resource
-import com.ojanbelajar.moviekatalogue.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.toast
 
 @AndroidEntryPoint
 class MyGardenFragment: Fragment(){

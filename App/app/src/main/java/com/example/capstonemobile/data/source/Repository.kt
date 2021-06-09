@@ -15,7 +15,7 @@ interface Repository {
 
     fun getDisease(): Flow<Resource<List<DiseaseEntity>>>
 
-    fun getNPK(): List<NPK>
+    fun getNPK(body: RequestBody): Flow<Resource<List<NPK>>>
 
     fun getDiseaseByUserId(idUser: String,idPlant: String): Flow<Resource<List<DiseaseByUserEntity>>>
 

@@ -15,14 +15,14 @@ data class DiseaseEntity(
         @NonNull
         var id: String = "",
 
-        @ColumnInfo(name = "diseasesName")
-        var diseasesName: String = "",
+        @ColumnInfo(name = "diseaseName")
+        var diseaseName: String = "",
 
-        @ColumnInfo(name = "diseasesDetail")
-        var diseasesDetail: String = "",
+        @ColumnInfo(name = "diseaseDetail")
+        var diseaseDetail: String = "",
 
-        @ColumnInfo(name = "diseasesTreatment")
-        var diseasesTreatment: String = "",
+        @ColumnInfo(name = "diseaseTreatment")
+        var diseaseTreatment: String = "",
 
         @ColumnInfo(name = "diseaseTreatmentVid")
         var diseaseTreatmentVid: String = "",

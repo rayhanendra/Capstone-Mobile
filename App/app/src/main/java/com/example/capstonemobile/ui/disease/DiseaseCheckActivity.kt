@@ -19,16 +19,18 @@ import org.jetbrains.anko.toast
 class DiseaseCheckActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityDiseaseCheckBinding
-    private val model : DiseaseViewModel by viewModels()
+    private val model: DiseaseViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDiseaseCheckBinding.inflate(layoutInflater)
         setContentView(binding.root)
+/*
         getAllDisease()
+*/
 
     }
-    private fun getAllDisease() {
+    /*   private fun getAllDisease() {
         val adapter = DiseaseHistoryAdapter(this)
         model.diseases.observe(this, Observer { diseases ->
             if (diseases != null) {
@@ -57,5 +59,6 @@ class DiseaseCheckActivity: AppCompatActivity() {
         adapter.onItemClick = { data ->
             startActivity<DetailDiseaseHistoryActivity>("disease" to data)
         }
-    }
+    }*/
+
 }

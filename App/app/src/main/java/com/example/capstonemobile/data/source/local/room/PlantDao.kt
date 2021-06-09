@@ -19,7 +19,7 @@ interface PlantDao {
     fun getPlantById(): Flow<List<PlantDetail>>
 
     @Query("Select * from npks")
-    fun getNPK(): List<NPK>
+    fun getNPK(): Flow<List<NPK>>
 
     @Query("SELECT * FROM plants WHERE id= :id")
     fun getPlantDetailById(id: String): Flow<Plant>

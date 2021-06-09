@@ -6,14 +6,13 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.example.capstonemobile.data.source.local.entity.PlantDetail
 import com.example.capstonemobile.databinding.ActivityDiseaseHistoryBinding
-import com.example.capstonemobile.ui.mygarden.PlantDetailActivity
 import com.example.capstonemobile.ui.mygarden.diseaseHistoryDetail.DetailDiseaseHistoryActivity
 import com.example.capstonemobile.utils.SessionManagement
 import com.ojanbelajar.moviekatalogue.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.toast
 
 @AndroidEntryPoint
@@ -28,19 +27,18 @@ class DiseaseHistoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         session = SessionManagement(this)
-        adapter = DiseaseHistoryAdapter(this)
         binding = ActivityDiseaseHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         back()
 
-        val plantId : String = intent.getStringExtra("plant").toString()
+        val plant: PlantDetail = intent.getParcelableExtra("plant")!!
 //        getAllDiseaseHistory(plantId)
 
-        getAllDisease()
+        getAllDisease(plant)
     }
 
-    private fun getAllDisease() {
-        val adapter = DiseaseHistoryAdapter(this)
+    private fun getAllDisease(plantDetail: PlantDetail) {
+        val adapter = DiseaseHistoryAdapter(this,plantDetail)
         model.diseases.observe(this, Observer { diseases ->
             if (diseases != null) {
                 when(diseases) {

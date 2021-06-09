@@ -9,6 +9,7 @@ import com.example.capstonemobile.data.source.local.entity.DiseaseByUserEntity
 import com.example.capstonemobile.data.source.local.entity.DiseaseEntity
 import com.example.capstonemobile.databinding.ItemHistoryDiseaseBinding
 import com.example.capstonemobile.ui.mygarden.diseaseHistoryDetail.DetailDiseaseHistoryActivity
+import org.jetbrains.anko.startActivity
 
 class DiseaseCheckAdapter (private val context: Context): RecyclerView.Adapter<DiseaseCheckAdapter.DiseaseHistoryViewHolder>() {
 
@@ -37,14 +38,11 @@ class DiseaseCheckAdapter (private val context: Context): RecyclerView.Adapter<D
     inner class DiseaseHistoryViewHolder(private val binding: ItemHistoryDiseaseBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(diseaseEntity: DiseaseEntity) {
             with(binding) {
-                tvPlantName.text = diseaseEntity.diseasesName
+                tvPlantName.text = diseaseEntity.diseaseName
                 tvPlantDate.text= diseaseEntity.createdAt
 
                 itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, DetailDiseaseHistoryActivity::class.java)
-                    intent.putExtra(DetailDiseaseHistoryActivity.EXTRA_DISEASE, diseaseEntity.id)
-                    intent.putExtra(DetailDiseaseHistoryActivity.EXTRA_PLANT, diseaseEntity.id)
-                    itemView.context.startActivity(intent)
+                  context.startActivity<DetailDiseaseHistoryActivity>("disease" to diseaseEntity)
                 }
             }
         }

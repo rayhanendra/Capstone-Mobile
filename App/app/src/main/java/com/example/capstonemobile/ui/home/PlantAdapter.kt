@@ -8,6 +8,8 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.example.capstonemobile.R
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
 import com.example.capstonemobile.databinding.ItemPlantPagerBinding
 import com.example.capstonemobile.ui.mygarden.PlantDetailActivity
@@ -44,7 +46,10 @@ inner class PlantAdapterViewHolder(private val binding: ItemPlantPagerBinding) :
 
     fun bind(plantDetail: PlantDetail) {
         Log.d("ojan", plantDetail.toString())
-        binding.textHome.text = plantDetail.plantName
+        Glide.with(context)
+            .load(plantDetail.plantImg)
+            .apply(RequestOptions().placeholder(R.drawable.ic_image))
+            .into(binding.slidePlant)
     }
 
     init {

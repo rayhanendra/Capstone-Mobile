@@ -1,6 +1,7 @@
 package com.example.capstonemobile.di
 
 import android.app.Application
+import android.content.Context
 import com.example.capstonemobile.api.ApiService
 import com.example.capstonemobile.data.source.PlantRepository
 import com.example.capstonemobile.data.source.Repository
@@ -11,10 +12,13 @@ import com.example.capstonemobile.data.source.local.room.PlantDatabase
 import com.example.capstonemobile.data.source.remote.RemoteDataSource
 import com.example.capstonemobile.data.source.remote.RemoteSource
 import com.example.capstonemobile.utils.AppExecutors
+import com.example.capstonemobile.utils.SessionManagement
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -41,9 +45,20 @@ object AppModule {
         writeTimeout(30, TimeUnit.SECONDS)
     }.build()
 
+
     @Singleton
     @Provides
-    fun provideRetrofitInstance(okHttpClient: OkHttpClient, BASEURL: String): Retrofit = Retrofit.Builder().apply {
+    fun provideInterceptor(): Interceptor =
+            Interceptor { chain ->
+                chain.proceed(chain.request().newBuilder()
+                    .addHeader("Authorization", "ya29.a0AfH6SMAtySlWeGc7SmpwOW-SHWHm9Oept8shttgtEYpCuw4mPGikke7H99wShB7I3FP-jyrleWBkc8KvcgJ73cxmx6499Ckmvj0iaJiNyMd0HYhlY_reig93y6QpmaJz6RFcxE-6lpYwUhLaW04HkjDQOD4Y3w")
+                    .build())
+
+        }
+
+    @Singleton
+    @Provides
+    fun provideRetrofitInstance(okHttpClient: OkHttpClient, BASEURL: String,interceptor: Interceptor): Retrofit = Retrofit.Builder().apply {
         baseUrl(BASEURL)
         client(okHttpClient)
         addConverterFactory(GsonConverterFactory.create())

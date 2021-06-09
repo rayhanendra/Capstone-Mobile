@@ -55,7 +55,7 @@
                 app:riv_corner_radius="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:src="@drawable/plant"/>
+                android:src="@drawable/plant"/>
 
             <ImageView
                 android:layout_gravity="bottom|right"
@@ -89,7 +89,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Kunyit" />
+                android:text="Jeruk" />
 
             <TextView
                 android:id="@+id/tv_disease_description"
@@ -104,7 +104,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_disease_name"
-                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu vel maecenas vitae turpis. Aliquet cursus morbi arcu quis fames." />
+                android:text="Jeruk atau limau adalah semua tumbuhan berbunga anggota marga Citrus dari suku Rutaceae. Anggotanya berbentuk pohon dengan buah yang berdaging dengan rasa masam yang segar, meskipun banyak di antara anggotanya yang memiliki rasa manis." />
 
 
             <TextView

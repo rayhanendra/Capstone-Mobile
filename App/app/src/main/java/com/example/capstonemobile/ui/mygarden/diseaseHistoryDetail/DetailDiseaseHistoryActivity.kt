@@ -31,9 +31,9 @@ class DetailDiseaseHistoryActivity : AppCompatActivity() {
 
 
     private fun populateDiseaseDetail(diseaseEntity: DiseaseEntity) {
-        binding.tvDiseaseName.text = diseaseEntity.diseasesName
-        binding.tvDiseaseDescription.text= diseaseEntity.diseasesDetail
-        binding.treatmentTitle.text = diseaseEntity.diseasesTreatment
+        binding.tvDiseaseName.text = diseaseEntity.diseaseName
+        binding.tvDiseaseDescription.text= diseaseEntity.diseaseDetail
+        binding.treatmentTitle.text = diseaseEntity.diseaseTreatment
         binding.videoTitle.text = diseaseEntity.diseaseTreatmentVid
     }
 

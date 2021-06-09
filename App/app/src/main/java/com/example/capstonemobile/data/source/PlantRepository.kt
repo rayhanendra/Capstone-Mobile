@@ -87,8 +87,24 @@ class PlantRepository @Inject constructor(
         }.asFlow()
     }
 
-    override fun getNPK(): List<NPK> {
-        return localSource.getNPK()
+    override fun getNPK(body: RequestBody): Flow<Resource<List<NPK>>> {
+       return object : NetworkBoundResource<List<NPK>,NPK>(){
+           override fun loadFromDB(): Flow<List<NPK>> {
+               return localSource.getNPK()
+           }
+
+           override fun shouldFetch(data: List<NPK>?): Boolean = false
+
+           override suspend fun createCall(): Flow<ApiResponse<NPK>> {
+                return remoteSource.insertNpk(body)
+           }
+
+           override suspend fun saveCallResult(data: NPK) {
+               TODO("Not yet implemented")
+           }
+
+       }.asFlow()
+
     }
 
     override fun getDiseaseByUserId(

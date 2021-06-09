@@ -1,11 +1,9 @@
 package com.example.capstonemobile.api
 
-import com.example.capstonemobile.data.source.local.entity.NPK
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
 import com.example.capstonemobile.data.source.remote.response.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Call
 import retrofit2.http.*
 
 

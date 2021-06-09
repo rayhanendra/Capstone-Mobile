@@ -12,7 +12,7 @@ interface LocalSource {
 
     fun getPlantById(): Flow<List<PlantDetail>>
 
-    fun getNPK(): List<NPK>
+    fun getNPK(): Flow<List<NPK>>
 
     fun getPlantDetail(id: String): Flow<Plant>
 

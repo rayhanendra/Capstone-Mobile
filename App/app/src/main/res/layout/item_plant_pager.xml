@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<com.makeramen.roundedimageview.RoundedImageView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/slide_plant"
     android:adjustViewBounds="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/text_home"
-            android:textSize="30sp"
-            android:gravity="center"
-            android:text="Popopop"
-            android:fontFamily="@font/poppins_bold"
-            android:textColor="@color/black"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+
+</com.makeramen.roundedimageview.RoundedImageView>

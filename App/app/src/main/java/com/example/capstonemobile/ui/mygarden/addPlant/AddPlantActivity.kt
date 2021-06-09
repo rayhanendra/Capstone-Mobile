@@ -10,7 +10,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -30,7 +29,6 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import java.io.ByteArrayOutputStream
 import java.io.File

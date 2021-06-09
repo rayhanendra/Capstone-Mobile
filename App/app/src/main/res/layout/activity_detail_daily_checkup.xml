@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -33,32 +34,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/plant_image"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/plant"
-        android:scaleType="centerCrop"
-        app:riv_corner_radius="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/plant_name" />
-
     <TextView
         android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/health"
-        android:textColor="@color/black"
-        android:textSize="20sp"
         android:layout_marginHorizontal="16dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Result"
+        android:textColor="@color/black"
+        android:layout_marginTop="50dp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/plant_image" />
+        app:layout_constraintTop_toBottomOf="@+id/plant_name" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_health"
@@ -154,16 +142,28 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
+                android:id="@+id/textView12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Recommended NPK Fertilizer"
+                android:textColor="@color/black"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/overall_health"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/progress_temperature_bar" />
+
+            <TextView
                 android:id="@+id/textView8"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
                 android:text="@string/nitrogen"
                 android:textColor="@color/black"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 app:layout_constraintEnd_toStartOf="@+id/overall_health"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/progress_temperature_bar" />
+                app:layout_constraintTop_toTopOf="@+id/textView12" />
 
             <TextView
                 android:id="@+id/progress_nitrogen"
@@ -173,11 +173,11 @@
                 android:fontFamily="@font/poppins_regular"
                 android:text="20%"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toStartOf="@+id/overall_health"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/progress_temperature_bar" />
+                app:layout_constraintTop_toTopOf="@+id/textView12" />
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/progress_nitrogen_bar"
@@ -285,28 +285,53 @@
                 android:text="80"
                 android:textColor="@color/white"
                 android:layout_marginBottom="8dp"
-
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/overall_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_bold"
-                android:text="@string/overall"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="@id/overall_health"
-                app:layout_constraintVertical_bias="0"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/overall_health"
-                app:layout_constraintTop_toBottomOf="@+id/overall_health" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_dont_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:fontFamily="@font/poppins_medium"
+        android:padding="10dp"
+        android:backgroundTint="@color/red"
+        android:text="Don't Save"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:cornerRadius="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cv_health"
+        app:layout_constraintVertical_bias="0.110000014" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:fontFamily="@font/poppins_medium"
+        android:padding="10dp"
+        android:text="Save"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:cornerRadius="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dont_save"
+        app:layout_constraintVertical_bias="0.110000014" />
 </androidx.constraintlayout.widget.ConstraintLayout>

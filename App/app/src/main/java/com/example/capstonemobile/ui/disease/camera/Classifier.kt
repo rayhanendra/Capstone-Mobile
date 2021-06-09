@@ -1,10 +1,15 @@
 package com.example.capstonemobile.ui.disease.camera
 
+import android.R.attr
 import android.content.res.AssetManager
 import android.graphics.Bitmap
 import android.os.SystemClock
 import android.util.Log
+import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
+import org.tensorflow.lite.support.image.ImageProcessor
+import org.tensorflow.lite.support.image.TensorImage
+import org.tensorflow.lite.support.image.ops.ResizeOp
 import java.io.FileInputStream
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -52,21 +57,18 @@ class Classifier(assetManager: AssetManager, modelPath: String, labelPath: Strin
 
     private fun loadLabelList(assetManager: AssetManager, labelPath: String): List<String> {
         return assetManager.open(labelPath).bufferedReader().useLines { it.toList() }
+
     }
 
     fun recognizeImage(bitmap: Bitmap): List<Recognition> {
         val scaledBitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, false)
 
         val byteBuffer = convertBitmapToByteBuffer(scaledBitmap)
-        Log.d("ime","${ByteArray(LABEL_LIST.size)} asa 3")
-        Log.d("ime","${INTERPRETER.getInputTensor(0)} asa 4")
-
         val result = Array(1) { ByteArray(LABEL_LIST.size) }
-        byteBuffer.rewind()
-        INTERPRETER.run(byteBuffer.asFloatBuffer().array(), result)
-        Log.d("ime","$result asa 5")
+        INTERPRETER.run(byteBuffer, result)
         return getSortedResult(result)
     }
+
 
 
     private fun addPixelValue(byteBuffer: ByteBuffer, intValue: Int): ByteBuffer {
@@ -77,6 +79,27 @@ class Classifier(assetManager: AssetManager, modelPath: String, labelPath: Strin
         return byteBuffer
     }
 
+    private fun convertBitmapToByteBuffer2(bitmap: Bitmap): ByteBuffer {
+        val byteBuffer = ByteBuffer.allocateDirect(32 * INPUT_SIZE * INPUT_SIZE * PIXEL_SIZE)
+        byteBuffer.order(ByteOrder.nativeOrder())
+
+        val pixels = IntArray(INPUT_SIZE * INPUT_SIZE)
+        bitmap.getPixels(pixels, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
+
+        for (pixelValue in pixels) {
+            val r = (pixelValue shr 16 and 0xFF)
+            val g = (pixelValue shr 8 and 0xFF)
+            val b = (pixelValue and 0xFF)
+
+            // Convert RGB to grayscale and normalize pixel value to [0..1]
+            val normalizedPixelValue = (r + g + b) / 3.0f / 255.0f
+            byteBuffer.putFloat(normalizedPixelValue)
+        }
+
+        return byteBuffer
+    }
+
+    /** Writes Image data into a `ByteBuffer`.  */
     private fun convertBitmapToByteBuffer(bitmap: Bitmap): ByteBuffer {
         val imgData = ByteBuffer.allocateDirect(INPUT_SIZE * INPUT_SIZE * PIXEL_SIZE)
         imgData.order(ByteOrder.nativeOrder())
@@ -112,11 +135,13 @@ class Classifier(assetManager: AssetManager, modelPath: String, labelPath: Strin
 
         for (i in LABEL_LIST.indices) {
             val confidence = labelProbArray[0][i]
-            Log.d("confidence value:", "" + confidence);
-            pq.add(Recognition("" + i,
-                if (LABEL_LIST.size > i) LABEL_LIST[i] else "Unknown",
-                ((confidence).toFloat() / 255.0f)
-            ))
+            if (confidence >= THRESHOLD) {
+                Log.d("confidence value:", "" + confidence);
+                pq.add(Recognition("" + i,
+                        if (LABEL_LIST.size > i) LABEL_LIST[i] else "Unknown",
+                        ((confidence).toFloat() / 255.0f)
+                ))
+            }
         }
         Log.d("Classifier", "pqsize:(%d)".format(pq.size))
 

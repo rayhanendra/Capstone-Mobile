@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.capstonemobile.databinding.ActivityDiseaseHistoryBinding
 import com.example.capstonemobile.ui.mygarden.PlantDetailActivity
+import com.example.capstonemobile.ui.mygarden.diseaseHistoryDetail.DetailDiseaseHistoryActivity
 import com.example.capstonemobile.utils.SessionManagement
 import com.ojanbelajar.moviekatalogue.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,7 +34,6 @@ class DiseaseHistoryActivity : AppCompatActivity() {
         back()
 
         val plantId : String = intent.getStringExtra("plant").toString()
-        Log.d("ini plantid langsung", plantId)
 //        getAllDiseaseHistory(plantId)
 
         getAllDisease()
@@ -68,7 +68,7 @@ class DiseaseHistoryActivity : AppCompatActivity() {
             this.adapter = adapter
         }
         adapter.onItemClick = { data ->
-            startActivity<DiseaseHistoryActivity>("plant" to data)
+            startActivity<DetailDiseaseHistoryActivity>("disease" to data)
         }
     }
 

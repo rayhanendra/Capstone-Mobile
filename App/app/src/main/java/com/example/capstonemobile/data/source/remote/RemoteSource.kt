@@ -24,6 +24,8 @@ interface RemoteSource {
 
     suspend fun insertNewPlant(id: String,plant: PlantDetail): Flow<ApiResponse<PlantDetail>>
 
+    suspend fun insertNpk(body: RequestBody): Flow<ApiResponse<NPK>>
+
     suspend fun uploadImage(picture: MultipartBody.Part): Flow<ApiResponse<UploadImage>>
 
     suspend fun login(body: RequestBody): Flow<ApiResponse<DataResponse>>

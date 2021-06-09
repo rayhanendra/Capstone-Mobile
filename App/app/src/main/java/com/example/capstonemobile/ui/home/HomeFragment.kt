@@ -66,6 +66,7 @@ class HomeFragment: Fragment() {
                         toast("Loading")
                     }
                     is Resource.Error -> {
+                        Log.d("er",plant.message.toString())
                         toast("Error")
                     }
                 }

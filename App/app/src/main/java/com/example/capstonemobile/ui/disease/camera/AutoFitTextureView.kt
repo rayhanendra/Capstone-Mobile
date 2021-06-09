@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.TextureView
 import android.view.View
 
+
 class AutoFitTextureView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,

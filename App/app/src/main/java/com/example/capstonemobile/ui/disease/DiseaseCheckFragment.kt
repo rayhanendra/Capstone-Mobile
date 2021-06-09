@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.capstonemobile.databinding.FragmentDiseaseCheckBinding
 import com.example.capstonemobile.ui.disease.camera.CameraActivity
+import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.anko.support.v4.startActivity
 
+@AndroidEntryPoint
 class DiseaseCheckFragment: Fragment() {
 
     private lateinit var binding: FragmentDiseaseCheckBinding
@@ -27,6 +29,10 @@ class DiseaseCheckFragment: Fragment() {
 
         binding.plantDisease.setOnClickListener {
             startActivity<CameraActivity>()
+        }
+
+        binding.myPlantDisease.setOnClickListener {
+            startActivity<DiseaseCheckActivity>()
         }
 
     }

@@ -1,6 +1,7 @@
 package com.example.capstonemobile.ui.mygarden.addPlant
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -18,10 +19,18 @@ class PhaseAdapter(private val phases: List<Phase>, private val context: Context
 
 
     override fun onBindViewHolder(holder: PhaseViewHolder, position: Int) {
-        val phase = phases[position]
+        val phase0 = phases[0]
+        val phase1 = phases[1]
+        val phase2 = phases[2]
+
         holder.init(context)
         holder.itemView.setOnClickListener {
-            holder.binding(context,phase)
+            when(position){
+                0 -> holder.binding(context,phase0)
+                1 -> holder.binding(context,phase1)
+                2 -> holder.binding(context,phase2)
+            }
+
         }
     }
 

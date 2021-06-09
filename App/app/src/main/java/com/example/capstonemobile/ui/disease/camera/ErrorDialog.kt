@@ -21,14 +21,12 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 
-/**
- * Shows an error message dialog.
- */
+
 class ErrorDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
             AlertDialog.Builder(activity)
-                    .setMessage(requireArguments().getString(ARG_MESSAGE))
+                    .setMessage("aw")
                     .setPositiveButton(android.R.string.ok) { _, _ -> requireActivity().finish() }
                     .create()
 

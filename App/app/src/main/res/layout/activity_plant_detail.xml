@@ -129,7 +129,7 @@
                 android:layout_marginTop="30dp"
                 android:id="@+id/cv_date"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/plant_description">
@@ -159,7 +159,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="15dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
                         <ImageView
                             android:src="@drawable/plant_at"
                             android:layout_width="20dp"
@@ -409,7 +410,7 @@
                         android:background="@drawable/overall"
                         android:fontFamily="@font/poppins_bold"
                         android:gravity="center"
-                        android:text="80"
+                        android:text="100"
                         android:textColor="@color/white"
 
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -441,6 +442,7 @@
                         android:fontFamily="@font/poppins_bold"
                         android:gravity="center"
                         android:text="Yes"
+                        android:visibility="gone"
                         android:backgroundTint="@color/red"
                         android:textColor="@color/white"
                         android:layout_marginTop="20dp"
@@ -457,6 +459,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_bold"
                         android:gravity="center"
+                        android:visibility="gone"
                         android:text="Disease"
                         android:textColor="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -498,6 +501,8 @@
                         android:layout_gravity="bottom"
                         android:fontFamily="@font/poppins_regular"
                         android:text="Sprout"
+                        android:textSize="32sp"
+                        android:textColor="@color/black"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <ImageView

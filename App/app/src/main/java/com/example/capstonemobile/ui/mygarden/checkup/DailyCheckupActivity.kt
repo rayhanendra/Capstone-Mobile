@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.capstonemobile.databinding.ActivityDailyCheckupBinding
-import com.example.capstonemobile.ui.mygarden.AddDailyCheckupActivity
 
 class DailyCheckupActivity: AppCompatActivity() {
 

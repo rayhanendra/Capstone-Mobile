@@ -1,6 +1,7 @@
 package com.example.capstonemobile.data.source
 
 
+import androidx.core.util.lruCache
 import com.example.capstonemobile.data.source.local.LocalSource
 import com.example.capstonemobile.data.source.local.entity.*
 import com.example.capstonemobile.data.source.remote.ApiResponse
@@ -58,7 +59,7 @@ class PlantRepository @Inject constructor(
                 return localSource.getPlantById()
             }
 
-            override fun shouldFetch(data: List<PlantDetail>?): Boolean  = data == null || data.isEmpty()
+            override fun shouldFetch(data: List<PlantDetail>?): Boolean  = true
 
 
             override suspend fun createCall(): Flow<ApiResponse<List<PlantDetail>>> {
@@ -84,6 +85,10 @@ class PlantRepository @Inject constructor(
                 return remoteSource.getAllDisease()
             }
         }.asFlow()
+    }
+
+    override fun getNPK(): List<NPK> {
+        return localSource.getNPK()
     }
 
     override fun getDiseaseByUserId(
@@ -126,6 +131,27 @@ class PlantRepository @Inject constructor(
             }
         }.asFlow()
     }
+
+    override fun insertNPK(body: RequestBody): Flow<Resource<NPK>> {
+        return object : NetworkOnlyResource<NPK,NPK>(){
+            override fun loadFromNetwork(data: NPK): Flow<NPK> {
+                return flowOf(data)
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<NPK>> {
+                return remoteSource.insertNpk(body)
+            }
+
+        }.asFlow()
+    }
+
+    override fun saveNpk(npk: NPK) {
+        appExecutors.diskIO().execute{
+            localSource.delete()
+            localSource.insertNPK(npk)
+        }
+    }
+
 
     override fun uploadImage(picture: MultipartBody.Part): Flow<Resource<UploadImage>> {
         return object : NetworkOnlyResource<UploadImage,UploadImage>(){

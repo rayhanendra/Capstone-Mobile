@@ -15,6 +15,8 @@ interface Repository {
 
     fun getDisease(): Flow<Resource<List<DiseaseEntity>>>
 
+    fun getNPK(): List<NPK>
+
     fun getDiseaseByUserId(idUser: String,idPlant: String): Flow<Resource<List<DiseaseByUserEntity>>>
 
 //    fun getDiseaseById(idUser: String, idPlant: String, id: String): Flow<Resource<DiseaseDetailEntity>>
@@ -23,7 +25,12 @@ interface Repository {
 
     fun insertNewPlant(id: String, plant: PlantDetail): Flow<Resource<PlantDetail>>
 
+    fun insertNPK(body: RequestBody): Flow<Resource<NPK>>
+
+    fun saveNpk(npk: NPK)
+
     fun uploadImage(picture: MultipartBody.Part): Flow<Resource<UploadImage>>
 
     fun login(body: RequestBody): Flow<Resource<User>>
+
 }

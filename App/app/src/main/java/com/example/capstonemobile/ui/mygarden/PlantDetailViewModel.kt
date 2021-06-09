@@ -10,4 +10,6 @@ class PlantDetailViewModel @ViewModelInject constructor(
 ): ViewModel() {
 
     fun getPlantDetail(id: String) = repository.getPlantById(id).asLiveData()
+
+    fun getNpk() = repository.getNPK()
 }

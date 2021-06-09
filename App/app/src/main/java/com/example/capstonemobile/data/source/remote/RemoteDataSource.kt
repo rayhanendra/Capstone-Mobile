@@ -156,6 +156,22 @@ class RemoteDataSource @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+    override suspend fun insertNpk(body: RequestBody): Flow<ApiResponse<NPK>> {
+        return flow {
+            try {
+                val response = apiService.npk(body)
+                val data = response.prediction
+                if (data != null){
+                    emit(ApiResponse.Success(response.prediction))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception){
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
     override suspend fun uploadImage(picture: MultipartBody.Part): Flow<ApiResponse<UploadImage>> {
         return flow {
             try {

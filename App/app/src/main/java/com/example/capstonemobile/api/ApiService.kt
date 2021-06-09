@@ -1,5 +1,6 @@
 package com.example.capstonemobile.api
 
+import com.example.capstonemobile.data.source.local.entity.NPK
 import com.example.capstonemobile.data.source.local.entity.PlantDetail
 import com.example.capstonemobile.data.source.remote.response.*
 import okhttp3.MultipartBody
@@ -36,6 +37,9 @@ interface ApiService {
 
     @POST("/api/user/_sign-in")
     suspend fun login(@Body body: RequestBody): UserResponse
+
+    @POST("https://asia-southeast1-ml.googleapis.com/v1/projects/yubisayu/models/fertilizer_recommender:predict")
+    suspend fun npk(@Body body: RequestBody): NPKResponse
 
     @Multipart
     @POST("/api/upload/plants")

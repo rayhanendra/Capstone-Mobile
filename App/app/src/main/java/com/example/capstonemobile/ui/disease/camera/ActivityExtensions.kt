@@ -1,5 +1,5 @@
-
 package com.example.capstonemobile.ui.disease.camera
+
 
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity

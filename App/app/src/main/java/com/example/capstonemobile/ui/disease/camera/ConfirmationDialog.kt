@@ -5,8 +5,6 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
-import com.example.capstonemobile.R
-
 
 
 class ConfirmationDialog : DialogFragment() {
@@ -15,11 +13,11 @@ class ConfirmationDialog : DialogFragment() {
             AlertDialog.Builder(activity)
                     .setMessage("req")
                     .setPositiveButton(android.R.string.ok) { _, _ ->
-                        requireParentFragment().requestPermissions(arrayOf(Manifest.permission.CAMERA),
+                       requestPermissions(arrayOf(Manifest.permission.CAMERA),
                                 REQUEST_CAMERA_PERMISSION)
                     }
                     .setNegativeButton(android.R.string.cancel) { _, _ ->
-                        requireParentFragment().activity?.finish()
+                        activity?.finish()
                     }
                     .create()
 }
